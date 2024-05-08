@@ -9,22 +9,9 @@ import java.util.Scanner;
  * Represents and manages the core gameplay logic and state for Blackjack.
  */
 public class GameEngine {
-    // Game rule constants.
-    public static final boolean DEALER_HITS_ON_SOFT_17 = true; // Determines if the dealer will hit on a soft 17 (Used for both logic and predictions).
-    public static final boolean DEALER_PEAKS_FOR_21 = true; // Determines if the dealer will check for blackjack with an ace or ten card (Used for both logic and predictions).
-    public static final boolean DEALER_ALWAYS_PLAYS_OUT = false; // Determines if the dealer will play out their hand if all player hands have already been resolved.
-    public static final boolean DOUBLE_AFTER_SPLIT = true; // Determines if the player is allowed to double after splitting (Used for predictions).
-    public static final boolean HIT_SPLIT_ACES = false; // Determines if the player is allowed to hit after splitting aces (Used for predictions).
-    public static final boolean DOUBLE_SPLIT_ACES = false; // Determines if the player is allowed to double after splitting aces (HIT_SPLIT_ACES & DOUBLE_AFTER_SPLIT must be true) (Used for predictions).
-    public static final boolean NATURAL_BLACKJACK_SPLITS = false; // Determines if a split hand being dealt a natural 21 is considered blackjack (Used for predictions).
-    public static final boolean SURRENDER = true; // Determines if the player is allowed to surrender as their first move.
-
-    // Configuration constants.
-    public static final int NUMBER_OF_DECKS = 6; // The number of standard decks used in the game (1 - 8 to avoid computational strain).
-    // public static final double BLACKJACK_ODDS = 1.5; // The odds paid for a player blackjack (Used for predictions).
 
     // Maps card abbreviations to their corresponding ranks.
-    private static final Map<String, Card.Ranks> RANK_NAMES = Map.ofEntries(
+    private final Map<String, Card.Ranks> RANK_NAMES = Map.ofEntries(
         new SimpleEntry<>("A", Card.Ranks.ACE),
         new SimpleEntry<>("2", Card.Ranks.TWO),
         new SimpleEntry<>("3", Card.Ranks.THREE),
@@ -60,11 +47,11 @@ public class GameEngine {
         while (true) {
             int initialPlayers = promptNumberOfPlayers();
 
-            if(initialPlayers == 0) {
+            if (initialPlayers == 0) {
                 break;
             }
 
-            if(promptShuffle()) {
+            if (promptShuffle()) {
                 deck.shuffle();
             }
 
@@ -257,7 +244,7 @@ public class GameEngine {
                     System.out.println(ConsoleUtil.colorText("SPLIT UNAVAILABLE", ConsoleUtil.ANSI_RED));
                     break;
                 case "SURRENDER":
-                    if (SURRENDER) {
+                    if (GameRules.SURRENDER) {
                         hand.setCards(new ArrayList<>());
                         return;
                     }
@@ -278,8 +265,8 @@ public class GameEngine {
     private void processDealerTurn(Round currRound) {
         Dealer dealer = currRound.getDealer();
     
-        if (!currRound.allPlayerHandsResolved() || DEALER_ALWAYS_PLAYS_OUT) {
-            while (dealer.getHand().evaluateHand() < 17 || (dealer.getHand().evaluateHand() == 17 && dealer.getHand().isSoftHand() && DEALER_HITS_ON_SOFT_17)) {
+        if (!currRound.allPlayerHandsResolved() || GameRules.DEALER_ALWAYS_PLAYS_OUT) {
+            while (dealer.getHand().evaluateHand() < 17 || (dealer.getHand().evaluateHand() == 17 && dealer.getHand().isSoftHand() && GameRules.DEALER_HITS_ON_SOFT_17)) {
                 System.out.println("Dealer: " + dealer);
                 dealer.getHand().addDrop(promptCard(false));
             }
@@ -305,13 +292,13 @@ public class GameEngine {
         double hitEV = pred.calculateHitEV(playerHand, dealerHand);
         double doubleEV = playerHand.getSize() == 2 ? pred.calculateDoubleEV(playerHand, dealerHand) : Double.NEGATIVE_INFINITY;
         double splitEV = playerHand.getSize() == 2 && firstCardVal == secondCardVal ? pred.calculateSplitEV(playerHand, dealerHand) : Double.NEGATIVE_INFINITY;
-        double surrenderEV = playerHand.getSize() == 2 && SURRENDER ? pred.calculateSurrenderEV(playerHand, dealerHand) : Double.NEGATIVE_INFINITY;
+        double surrenderEV = playerHand.getSize() == 2 && GameRules.SURRENDER ? pred.calculateSurrenderEV(playerHand, dealerHand) : Double.NEGATIVE_INFINITY;
 
         double maxEV = Math.max(Math.max(Math.max(standEV, hitEV), Math.max(doubleEV, splitEV)), surrenderEV);
 
         String doubleMessage = playerHand.getSize() == 2 ? "DoubleEV: " + doubleEV * 100 + " %" : "DoubleEV: N/A";
         String splitMessage = playerHand.getSize() == 2 && firstCardVal == secondCardVal ? "SplitEV: " + splitEV * 100 + " %" : "SplitEV: N/A";
-        String surrenderMessage = playerHand.getSize() == 2 && SURRENDER ? "SurrenderEV: " + surrenderEV * 100 + " %" : "SurrenderEV: N/A";
+        String surrenderMessage = playerHand.getSize() == 2 && GameRules.SURRENDER ? "SurrenderEV: " + surrenderEV * 100 + " %" : "SurrenderEV: N/A";
         String standEVColor = maxEV == standEV ? ConsoleUtil.ANSI_GREEN : ConsoleUtil.ANSI_GRAY;
         String hitEVColor = maxEV == hitEV ? ConsoleUtil.ANSI_GREEN : ConsoleUtil.ANSI_GRAY;
         String doubleEVColor = maxEV == doubleEV ? ConsoleUtil.ANSI_GREEN : ConsoleUtil.ANSI_GRAY;

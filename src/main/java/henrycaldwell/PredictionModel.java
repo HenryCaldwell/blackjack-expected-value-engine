@@ -8,6 +8,7 @@ import java.util.HashMap;
  * Expected values represent the average return on investment over infinite time.
  */
 public class PredictionModel {
+    
     // Maps integer values to their corresponding ranks.
     private static final Map<Integer, Card.Ranks> VALUE_MAP = Map.of(
         0, Card.Ranks.ACE,
@@ -79,7 +80,7 @@ public class PredictionModel {
 
         if ((dealerScore > 17) ||
             (dealerScore == 17 && !isSoftHand) ||
-            (dealerScore == 17 && isSoftHand && !GameEngine.DEALER_HITS_ON_SOFT_17)) {
+            (dealerScore == 17 && isSoftHand && !GameRules.DEALER_HITS_ON_SOFT_17)) {
                 double outcome = evaluateOutcome(playerHand, dealerHand, isSplit);
                 memoizationCache.put(stateKey, outcome);
                 return outcome;
@@ -90,7 +91,7 @@ public class PredictionModel {
 
         for (int i = 0; i < cardCounts.length; i++) {
             if (cardCounts[i] > 0) {
-                if (GameEngine.DEALER_PEAKS_FOR_21 && dealerHand.getSize() == 1 && (
+                if (GameRules.DEALER_PEAKS_FOR_21 && dealerHand.getSize() == 1 && (
                     (dealerFirstCardValue == 10 && i == 0) ||
                     (dealerFirstCardValue == 1 && i == 9))) {
                         continue;
@@ -265,13 +266,13 @@ public class PredictionModel {
                 double hitEV = Double.NEGATIVE_INFINITY;
                 double doubleEV = Double.NEGATIVE_INFINITY;
 
-                if (isAceSplit && GameEngine.HIT_SPLIT_ACES ||
+                if (isAceSplit && GameRules.HIT_SPLIT_ACES ||
                     !isAceSplit) {
                     hitEV = calculateHitEV(newCardCounts, newPlayerHand, dealerHand, true);
                 } 
                 
-                if (GameEngine.DOUBLE_AFTER_SPLIT &&
-                    ((isAceSplit && GameEngine.HIT_SPLIT_ACES && GameEngine.DOUBLE_SPLIT_ACES) ||
+                if (GameRules.DOUBLE_AFTER_SPLIT &&
+                    ((isAceSplit && GameRules.HIT_SPLIT_ACES && GameRules.DOUBLE_SPLIT_ACES) ||
                     !isAceSplit)) {
                     doubleEV = calculateDoubleEV(newCardCounts, newPlayerHand, dealerHand, true);
                 }
@@ -309,13 +310,13 @@ public class PredictionModel {
         int playerHandSize = playerHand.getSize();
         int dealerHandSize = dealerHand.getSize();
 
-        boolean playerNaturalBlackjack = playerScore == 21 && playerHandSize == 2 && (!isSplit || GameEngine.NATURAL_BLACKJACK_SPLITS);
+        boolean playerNaturalBlackjack = playerScore == 21 && playerHandSize == 2 && (!isSplit || GameRules.NATURAL_BLACKJACK_SPLITS);
         boolean dealerNaturalBlackjack = dealerScore == 21 && dealerHandSize == 2;
 
         if (playerNaturalBlackjack && dealerNaturalBlackjack) {
             return 0.0; 
         } else if (playerNaturalBlackjack) {
-            return 1.5;
+            return GameRules.BLACKJACK_ODDS;
         } else if (dealerNaturalBlackjack) {
             return -1.0;
         } else if (playerScore > 21) {

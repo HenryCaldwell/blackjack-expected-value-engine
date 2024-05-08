@@ -26,7 +26,7 @@ public class Deck {
 	public void shuffle() {
         cards.clear();
 
-        for (int currDeck = 0; currDeck < GameEngine.NUMBER_OF_DECKS; currDeck++) {
+        for (int currDeck = 0; currDeck < GameRules.NUMBER_OF_DECKS; currDeck++) {
             for (int currSuit = 0; currSuit < 4; currSuit++) {
                 for (Card.Ranks currRank : Card.Ranks.values()) {
                     cards.add(new Card(currRank));
