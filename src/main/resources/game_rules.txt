@@ -2,6 +2,7 @@
 #
 #  Number of decks used
 #   The number of standard decks used in the game (2 - 8 for conventional casino rules)
+#
 
 NUMBER_OF_DECKS = 6
 
@@ -9,6 +10,7 @@ NUMBER_OF_DECKS = 6
 #
 #  Ratio paid out for a natural blackjack
 #   The odds paid for a player blackjack (Used for predictions)
+#
 
 BLACKJACK_ODDS = 1.5
 

@@ -119,4 +119,81 @@ The `Round` class represents a single round in the Blackjack game, managing the 
 - `allPlayerHandsResolved()`: Checks if all player hands are resolved.
 - `getPlayers()`, `getDealer()`, `getNumPlayers()`, `toString()`: Various utilities and representations for the round.
 
-This setup provides a structured approach to simulating a Blackjack game, with clear responsibilities assigned to each class, facilitating easy maintenance and potential future enhancements.
+## Configuration
+
+The game rules are configurable through a `game_rules.txt` file located in the `src/main/resources` directory. This file allows you to adjust various game constants and settings. 
+
+Below is an example of the default file contents:
+
+```plaintext
+###########################################################
+#
+#  Number of decks used
+#  The number of standard decks used in the game (2 - 8 for conventional casino rules)
+#
+
+NUMBER_OF_DECKS = 6
+
+###########################################################
+#
+#  Allow surrender
+#  Determines if the player is allowed to surrender as their first move (Used for logic)
+#
+
+SURRENDER = true
+
+###########################################################
+#
+#  Dealer hits soft 17
+#  Determines if the dealer will hit on a soft 17 (Used for both logic and predictions)
+#
+
+DEALER_HITS_ON_SOFT_17 = true
+
+###########################################################
+#
+#  Dealer peaks for natural blackjack
+#  Determines if the dealer will check for blackjack with an ace or ten card (Used for both logic and predictions)
+#
+
+DEALER_PEAKS_FOR_21 = true
+
+###########################################################
+#
+#  Dealer plays out hand
+#  Determines if the dealer will play out their hand if all player hands have already been resolved (Used for logic)
+#
+
+DEALER_ALWAYS_PLAYS_OUT = false
+
+###########################################################
+#
+#  Allow natural blackjack after splitting
+#  Determines if a split hand being dealt a natural 21 is considered blackjack (Used for predictions)
+#
+
+NATURAL_BLACKJACK_SPLITS = false
+
+###########################################################
+#
+#  Allow doubling after splitting
+#  Determines if the player is allowed to double after splitting (Used for predictions)
+#
+
+DOUBLE_AFTER_SPLIT = true
+
+###########################################################
+#
+#  Allow hitting after splitting aces
+#  Determines if the player is allowed to hit after splitting aces (Used for predictions)
+#
+
+HIT_SPLIT_ACES = false
+
+###########################################################
+#
+#  Allow doubling after splitting aces
+#  ***HIT_SPLIT_ACES & DOUBLE_AFTER_SPLIT MUST BE TRUE*** Determines if the player is allowed to double after splitting aces (Used for predictions)
+#
+
+DOUBLE_SPLIT_ACES = false
