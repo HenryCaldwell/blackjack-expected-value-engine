@@ -98,6 +98,7 @@ public class GameEngine {
 
     /**
      * Prompts the user to select a card from the deck, providing the option to specify unknown with '?'.
+     * @param nullPossible Indicates whether '?' can be entered.
      * @return The selected card or null if '?' is entered.
      */
     private Card promptCard(boolean nullPossible) {
