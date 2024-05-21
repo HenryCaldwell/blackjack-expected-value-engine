@@ -43,7 +43,7 @@ public class Round {
             for (Hand hand : player.getHands()) {
                 int playerScore = hand.evaluateHand();
                 
-                if (!(playerScore == 21 && hand.getSize() == 2) && (playerScore < 21)) {
+                if (!(playerScore == 21 && hand.getSize() == 2) && (playerScore < 21) && !(playerScore == 0)) {
                     return false;
                 }
             }
