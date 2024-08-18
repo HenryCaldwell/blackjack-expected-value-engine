@@ -1,7 +1,7 @@
 package henrycaldwell;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a hand of playing cards.

@@ -1,27 +1,13 @@
 package henrycaldwell;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents the prediction logic for calculating expected values (EV) for various actions in a blackjack game.
  * Expected values represent the average return on investment over infinite time.
  */
 public class PredictionModel {
-    
-    // Maps integer values to their corresponding ranks.
-    private static final Map<Integer, Card.Ranks> VALUE_MAP = Map.of(
-        0, Card.Ranks.ACE,
-        1, Card.Ranks.TWO,
-        2, Card.Ranks.THREE,
-        3, Card.Ranks.FOUR,
-        4, Card.Ranks.FIVE,
-        5, Card.Ranks.SIX,
-        6, Card.Ranks.SEVEN,
-        7, Card.Ranks.EIGHT,
-        8, Card.Ranks.NINE,
-        9, Card.Ranks.TEN
-    );
 
     private Deck deck; // The deck used for the calculations.
     private Map<String, Double> memoizationCache; // The caching mechanism to store previously calculated outcomes.
@@ -101,7 +87,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newDealerHand = dealerHand.clone();
-                Card tempCard = new Card(VALUE_MAP.get(i));
+                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
                 newDealerHand.add(tempCard);
 
                 double outcome = calculateStandEV(newCardCounts, playerHand, newDealerHand, isSplit) * cardCounts[i];
@@ -148,7 +134,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newPlayerHand = playerHand.clone();
-                Card tempCard = new Card(VALUE_MAP.get(i));
+                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 if (newPlayerHand.evaluateHand() > 21) {
@@ -203,7 +189,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newPlayerHand = playerHand.clone();
-                Card tempCard = new Card(VALUE_MAP.get(i));
+                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 if (newPlayerHand.evaluateHand() > 21) {
@@ -259,7 +245,7 @@ public class PredictionModel {
 
                 Hand newPlayerHand = new Hand(deck);
                 newPlayerHand.add(splitCard);
-                Card tempCard = new Card(VALUE_MAP.get(i));
+                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 double standEV = calculateStandEV(newCardCounts, newPlayerHand, dealerHand, true);

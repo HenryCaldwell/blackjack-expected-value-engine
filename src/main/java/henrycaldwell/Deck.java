@@ -1,8 +1,8 @@
 package henrycaldwell;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents a deck of playing cards, capable of shuffling and managing cards.

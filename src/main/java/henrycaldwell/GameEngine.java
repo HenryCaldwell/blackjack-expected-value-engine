@@ -1,31 +1,14 @@
 package henrycaldwell;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Scanner;
+
+import henrycaldwell.Card.Ranks;
 
 /**
  * Represents and manages the core gameplay logic and state for Blackjack.
  */
 public class GameEngine {
-
-    // Maps card abbreviations to their corresponding ranks.
-    private final Map<String, Card.Ranks> RANK_NAMES = Map.ofEntries(
-        new SimpleEntry<>("A", Card.Ranks.ACE),
-        new SimpleEntry<>("2", Card.Ranks.TWO),
-        new SimpleEntry<>("3", Card.Ranks.THREE),
-        new SimpleEntry<>("4", Card.Ranks.FOUR),
-        new SimpleEntry<>("5", Card.Ranks.FIVE),
-        new SimpleEntry<>("6", Card.Ranks.SIX),
-        new SimpleEntry<>("7", Card.Ranks.SEVEN),
-        new SimpleEntry<>("8", Card.Ranks.EIGHT),
-        new SimpleEntry<>("9", Card.Ranks.NINE),
-        new SimpleEntry<>("10", Card.Ranks.TEN),
-        new SimpleEntry<>("J", Card.Ranks.JACK),
-        new SimpleEntry<>("Q", Card.Ranks.QUEEN),
-        new SimpleEntry<>("K", Card.Ranks.KING)
-    );
 
     private Deck deck; // The deck used in the game.
     private PredictionModel pred; // The prediction model used for calculating expected return values.
@@ -111,13 +94,15 @@ public class GameEngine {
             if (input.equals("?") && nullPossible) {
                 return null;
             }
+
+            Ranks rank = Ranks.fromAbbreviation(input);
     
-            if (!RANK_NAMES.containsKey(input)) {
+            if (rank == null) {
                 System.out.println(ConsoleUtil.colorText("ENTER A VALID CARD RANK", ConsoleUtil.ANSI_RED));
                 continue;
             }
     
-            Card card = new Card(RANK_NAMES.get(input));
+            Card card = new Card(rank);
             
             if (deck.contains(card)) {
                 return card;
