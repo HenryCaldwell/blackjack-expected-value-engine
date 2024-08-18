@@ -107,7 +107,7 @@ public class Hand {
 	        int cardValue = card.getRank().getValue();
 	        totalValue += cardValue;
 
-	        if (card.getRank().equals(Card.Ranks.ACE)) {
+	        if (card.getRank().equals(Card.Rank.ACE)) {
 	            hasAce = true;
 	        }
 	    }
@@ -131,7 +131,7 @@ public class Hand {
 	        int cardValue = card.getRank().getValue();
 	        totalValue += cardValue;
 
-	        if (card.getRank().equals(Card.Ranks.ACE)) {
+	        if (card.getRank().equals(Card.Rank.ACE)) {
 	            hasAce = true;
 	        }
 	    }

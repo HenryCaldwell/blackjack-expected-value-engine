@@ -87,7 +87,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newDealerHand = dealerHand.clone();
-                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
+                Card tempCard = new Card(Card.Rank.fromValue(i + 1));
                 newDealerHand.add(tempCard);
 
                 double outcome = calculateStandEV(newCardCounts, playerHand, newDealerHand, isSplit) * cardCounts[i];
@@ -134,7 +134,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newPlayerHand = playerHand.clone();
-                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
+                Card tempCard = new Card(Card.Rank.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 if (newPlayerHand.evaluateHand() > 21) {
@@ -189,7 +189,7 @@ public class PredictionModel {
                 newCardCounts[i]--;
 
                 Hand newPlayerHand = playerHand.clone();
-                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
+                Card tempCard = new Card(Card.Rank.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 if (newPlayerHand.evaluateHand() > 21) {
@@ -233,7 +233,7 @@ public class PredictionModel {
         }
 
         Card splitCard = playerHand.getCards().get(0);
-        boolean isAceSplit = splitCard.getRank() == Card.Ranks.ACE;
+        boolean isAceSplit = splitCard.getRank() == Card.Rank.ACE;
 
         double totalEV = 0.0;
         int totalCards = 0;
@@ -245,7 +245,7 @@ public class PredictionModel {
 
                 Hand newPlayerHand = new Hand(deck);
                 newPlayerHand.add(splitCard);
-                Card tempCard = new Card(Card.Ranks.fromValue(i + 1));
+                Card tempCard = new Card(Card.Rank.fromValue(i + 1));
                 newPlayerHand.add(tempCard);
 
                 double standEV = calculateStandEV(newCardCounts, newPlayerHand, dealerHand, true);

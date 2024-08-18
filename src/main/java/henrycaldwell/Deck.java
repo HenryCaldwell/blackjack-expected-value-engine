@@ -28,7 +28,7 @@ public class Deck {
 
         for (int currDeck = 0; currDeck < GameRules.NUMBER_OF_DECKS; currDeck++) {
             for (int currSuit = 0; currSuit < 4; currSuit++) {
-                for (Card.Ranks currRank : Card.Ranks.values()) {
+                for (Card.Rank currRank : Card.Rank.values()) {
                     cards.add(new Card(currRank));
                 }
             }
