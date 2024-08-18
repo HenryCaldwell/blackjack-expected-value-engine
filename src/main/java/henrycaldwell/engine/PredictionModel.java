@@ -1,7 +1,11 @@
-package henrycaldwell;
+package henrycaldwell.engine;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import henrycaldwell.model.Card;
+import henrycaldwell.model.Deck;
+import henrycaldwell.model.Hand;
 
 /**
  * Represents the prediction logic for calculating expected values (EV) for various actions in a blackjack game.

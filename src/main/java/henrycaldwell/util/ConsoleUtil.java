@@ -1,4 +1,4 @@
-package henrycaldwell;
+package henrycaldwell.util;
 
 /**
  * Utility class for coloring text in console output.

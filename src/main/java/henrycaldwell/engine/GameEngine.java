@@ -1,9 +1,15 @@
-package henrycaldwell;
+package henrycaldwell.engine;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import henrycaldwell.Card.Ranks;
+import henrycaldwell.model.Card;
+import henrycaldwell.model.Card.Rank;
+import henrycaldwell.model.Dealer;
+import henrycaldwell.model.Deck;
+import henrycaldwell.model.Hand;
+import henrycaldwell.model.Player;
+import henrycaldwell.util.ConsoleUtil;
 
 /**
  * Represents and manages the core gameplay logic and state for Blackjack.
@@ -95,7 +101,7 @@ public class GameEngine {
                 return null;
             }
 
-            Ranks rank = Ranks.fromAbbreviation(input);
+            Rank rank = Rank.fromAbbreviation(input);
     
             if (rank == null) {
                 System.out.println(ConsoleUtil.colorText("ENTER A VALID CARD RANK", ConsoleUtil.ANSI_RED));

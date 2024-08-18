@@ -1,4 +1,4 @@
-package henrycaldwell;
+package henrycaldwell.model;
 
 /**
  * Represents a Dealer in a card game.

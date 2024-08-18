@@ -1,10 +1,12 @@
-package henrycaldwell;
+package henrycaldwell.engine;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import henrycaldwell.util.ConsoleUtil;
 
 /**
  * Manages the configuration and game rules for Blackjack.

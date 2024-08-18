@@ -1,8 +1,10 @@
-package henrycaldwell;
+package henrycaldwell.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import henrycaldwell.engine.GameRules;
 
 /**
  * Represents a deck of playing cards, capable of shuffling and managing cards.

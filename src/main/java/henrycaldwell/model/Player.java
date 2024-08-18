@@ -1,4 +1,4 @@
-package henrycaldwell;
+package henrycaldwell.model;
 
 import java.util.ArrayList;
 import java.util.List;

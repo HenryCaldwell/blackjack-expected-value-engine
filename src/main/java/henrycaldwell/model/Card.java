@@ -1,4 +1,4 @@
-package henrycaldwell;
+package henrycaldwell.model;
 
 /**
  * Represents a card with a specific rank in a deck of playing cards.

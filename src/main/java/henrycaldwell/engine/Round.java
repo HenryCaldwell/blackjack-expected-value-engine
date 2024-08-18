@@ -1,7 +1,12 @@
-package henrycaldwell;
+package henrycaldwell.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import henrycaldwell.model.Dealer;
+import henrycaldwell.model.Deck;
+import henrycaldwell.model.Hand;
+import henrycaldwell.model.Player;
 
 /**
  * Represents a single round of the blackjack game, managing the players, dealer, and their hands.
