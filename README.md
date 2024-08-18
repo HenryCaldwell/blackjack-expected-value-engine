@@ -14,6 +14,11 @@ The `Card` class represents a playing card with a specific rank and includes met
 #### Methods
 - `getRank()`: Returns the rank of the card.
 - `toString()`: Provides a string representation of the card's rank.
+- `Ranks.fromAbbreviation(String abbreviation)`: Returns the `Ranks` enum corresponding to the given abbreviation, or `null` if not found.
+- `Ranks.fromValue(int value)`: Returns the `Ranks` enum corresponding to the given value, or `null` if not found.
+- `Ranks.getAbbreviation()`: Retrieves the abbreviation of the card rank.
+- `Ranks.getValue()`: Retrieves the numeric value of the card rank.
+- `Ranks.getName()`: Retrieves the name of the card rank.
 
 ### `ConsoleUtil`
 
