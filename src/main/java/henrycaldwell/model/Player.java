@@ -4,147 +4,177 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a player in a card game.
+ * Represents a player in a blackjack game, managing their hands and actions.
  */
 public class Player {
 
-    private List<Hand> hands; // The list of hands held by the player.
+  private List<Hand> hands; // The list of hands held by the player.
 
-    /**
-     * Constructs a player with no hands.
-     */
-    public Player() {
-        this.hands = new ArrayList<>();
-    }
-    
-    /**
-     * Constructs a player with a predefined list of hands.
-     * @param hands The list of pre-existing hands to be assigned to the player.
-     */
-    public Player(List<Hand> hands) {
-        this.hands = new ArrayList<>(hands);
-    }
+  /**
+   * Constructs a player with no hands.
+   */
+  public Player() {
+    this.hands = new ArrayList<>();
+  }
 
-    /**
-     * Adds a hand to the player's list of hands if the hand is not null.
-     * @param hand The hand to add.
-     * @return True if the hand was added successfully, false otherwise.
-     */
-    public Boolean addHand(Hand hand) {
-        if (hand != null) {
-            hands.add(hand);
-            return true;
-        }
-
-        return false;
+  /**
+   * Constructs a player with a predefined list of hands.
+   *
+   * @param hands The list of pre-existing hands to be assigned to the player.
+   * @throws IllegalArgumentException if the hands list is {@code null}.
+   */
+  public Player(List<Hand> hands) {
+    if (hands == null) {
+      throw new IllegalArgumentException("Hands list cannot be null.");
     }
 
-    /**
-     * Removes a hand from the player's list at the specified index.
-     * @param index The index of the hand to be removed.
-     * @return True if the hand was removed successfully, false otherwise.
-     */
-    public Boolean removeHand(int index) {
-        if (index >= 0 && index < hands.size()) {
-            hands.remove(index);
-            return true;
-        }
+    this.hands = new ArrayList<>(hands);
+  }
 
-        return false;
+  /**
+   * Adds a hand to the player's list of hands.
+   *
+   * @param hand The hand to add.
+   * @throws IllegalArgumentException if the hand is {@code null}.
+   */
+  public void addHand(Hand hand) {
+    if (hand == null) {
+      throw new IllegalArgumentException("Hand cannot be null.");
     }
 
-    /**
-     * Attempts to split a hand at a specified index. Splitting is only allowed if the hand contains exactly two cards of the same rank.
-     * @param index The index of the hand to split.
-     * @return True if the hand was successfully split, false otherwise.
-     */
-    public Boolean splitHand(int index) {
-        if (index >= 0 && index < hands.size()) {
-            Hand hand = hands.get(index);
+    hands.add(hand);
+  }
 
-            if (canSplit(index)) {
-                Card splitCard = hand.getCards().get(0);
-
-                Hand firstSplit = new Hand(hand.getDeck());
-                firstSplit.add(splitCard);
-                Hand secondSplit = new Hand(hand.getDeck());
-                secondSplit.add(splitCard);
-
-                hands.set(index, firstSplit);
-                hands.add(index + 1, secondSplit);
-
-                return true;
-            }
-        }
-
-        return false;
+  /**
+   * Removes a hand from the player's list at the specified index.
+   *
+   * @param index The index of the hand to be removed.
+   * @throws IndexOutOfBoundsException if the index is out of range (less than 0
+   *                                   or greater than or equal to the number of
+   *                                   hands).
+   */
+  public void removeHand(int index) {
+    if (index < 0 || index >= hands.size()) {
+      throw new IndexOutOfBoundsException("Invalid hand index: " + index + ".");
     }
 
-    /**
-     * Checks if a hand at a given index can be split.
-     * @param index The index of the hand to check.
-     * @return True if the hand can be split, false otherwise.
-     */
-    public Boolean canSplit(int index) {
-        if (index >= 0 && index < hands.size()) {
-            Hand hand = hands.get(index);
-            int firstCardValue = hand.getCards().get(0).getRank().getValue();
-            int secondCardValue = hand.getCards().get(1).getRank().getValue();
+    hands.remove(index);
+  }
 
-            return hand.getSize() == 2 && firstCardValue == secondCardValue;
-        }
-
-        return false;
+  /**
+   * Attempts to split a hand at a specified index. Splitting is only allowed if
+   * the hand contains exactly two cards of the same rank.
+   *
+   * @param index The index of the hand to split.
+   * @throws IndexOutOfBoundsException if the index is out of range (less than 0
+   *                                   or greater than or equal to the number of
+   *                                   hands).
+   * @throws IllegalArgumentException  if the hand at the specified index cannot
+   *                                   be split.
+   */
+  public void splitHand(int index) {
+    if (index < 0 || index >= hands.size()) {
+      throw new IndexOutOfBoundsException("Invalid hand index: " + index + ".");
     }
 
-    /**
-     * Retrieves the list of all hands held by the player.
-     * @return The list of hands.
-     */
-    public List<Hand> getHands() {
-        return hands;
+    Hand originalHand = hands.get(index);
+
+    if (!canSplit(index)) {
+      throw new IllegalArgumentException("Hand at index " + index + " cannot be split.");
     }
 
-    /**
-     * Retrieves the number of hands the player currently holds.
-     * @return The number of hands.
-     */
-    public int getNumHands() {
-        return hands.size();
+    List<Card> originalCards = originalHand.getCards();
+
+    Card firstCard = originalCards.get(0);
+    Card secondCard = originalCards.get(1);
+
+    Hand firstSplit = new Hand();
+    firstSplit.add(firstCard.getRank());
+
+    Hand secondSplit = new Hand();
+    secondSplit.add(secondCard.getRank());
+
+    hands.set(index, firstSplit);
+    hands.add(index + 1, secondSplit);
+  }
+
+  /**
+   * Checks if a hand at a given index can be split.
+   *
+   * @param index The index of the hand to check.
+   * @return {@code true} if the hand can be split; {@code false} otherwise.
+   * @throws IndexOutOfBoundsException if the index is out of range (less than 0
+   *                                   or greater than or equal to the number of
+   *                                   hands).
+   */
+  public boolean canSplit(int index) {
+    if (index < 0 || index >= hands.size()) {
+      throw new IndexOutOfBoundsException("Invalid hand index: " + index + ".");
     }
 
-    /**
-     * Creates a deep copy of the player.
-     * @return A new Player object with cloned hands.
-     */
-    @Override
-    public Player clone() {
-        List<Hand> clonedHands = new ArrayList<>();
+    Hand hand = hands.get(index);
 
-        for (Hand hand : this.hands) {
-            clonedHands.add(hand.clone());
-        }
-
-        return new Player(clonedHands);
+    if (hand.getSize() != 2) {
+      return false;
     }
 
-    /**
-     * Provides a string representation of all hands held by the player, listing each hand on a new line.
-     * @return A string detailing each hand held by the player.
-     */
-    @Override
-    public String toString() {
-        StringBuilder output = new StringBuilder();
+    List<Card> cards = hand.getCards();
+    return cards.get(0).getRank().equals(cards.get(1).getRank());
+  }
 
-        for (int handIndex = 0; handIndex < hands.size(); handIndex++) {
-            Hand currHand = hands.get(handIndex);
-            output.append("Hand ").append(handIndex + 1).append(": ").append(currHand);
+  /**
+   * Retrieves a list of all hands held by the player.
+   *
+   * @return A new list containing the player's hands.
+   */
+  public List<Hand> getHands() {
+    return new ArrayList<>(hands);
+  }
 
-            if (handIndex < hands.size() - 1) {
-                output.append("\n");
-            }
-        }
+  /**
+   * Retrieves the number of hands the player currently holds.
+   *
+   * @return The number of hands.
+   */
+  public int getNumHands() {
+    return hands.size();
+  }
 
-        return output.toString();
+  /**
+   * Creates a deep copy of the player.
+   *
+   * @return A new {@code Player} object with cloned hands.
+   */
+  @Override
+  public Player clone() {
+    List<Hand> clonedHands = new ArrayList<>();
+
+    for (Hand hand : this.hands) {
+      clonedHands.add(hand.clone());
     }
+
+    return new Player(clonedHands);
+  }
+
+  /**
+   * Provides a string representation of all hands held by the player, listing
+   * each hand on a new line.
+   *
+   * @return A string detailing each hand held by the player.
+   */
+  @Override
+  public String toString() {
+    StringBuilder output = new StringBuilder();
+
+    for (int handIndex = 0; handIndex < hands.size(); handIndex++) {
+      Hand currentHand = hands.get(handIndex);
+      output.append("Hand ").append(handIndex + 1).append(": ").append(currentHand);
+
+      if (handIndex < hands.size() - 1) {
+        output.append("\n");
+      }
+    }
+
+    return output.toString();
+  }
 }
