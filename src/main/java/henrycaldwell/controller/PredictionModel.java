@@ -245,6 +245,11 @@ public class PredictionModel {
           "Arguments to calculateSplitEV cannot be null: valueCounts, playerHand, and dealerHand are required.");
     }
 
+    // Validate if the playerHand can be split
+    if (!playerHand.canSplit()) {
+      throw new IllegalArgumentException("Hand cannot be split");
+    }
+
     String stateKey = getStateKey(valueCounts, playerHand, dealerHand, true, "stand");
 
     if (memoizationCache.containsKey(stateKey)) {
