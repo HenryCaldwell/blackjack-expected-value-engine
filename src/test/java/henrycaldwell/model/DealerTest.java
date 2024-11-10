@@ -11,7 +11,29 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test suite for the Dealer class.
+ * Test suite for the {@link Dealer} class.
+ * <p>
+ * This class contains unit tests to verify the correctness of the
+ * {@link Dealer}
+ * class,
+ * including its constructors, {@code addHand}, {@code getHand}, {@code clone},
+ * and {@code toString} methods.
+ * </p>
+ * <p>
+ * Example usage:
+ * </p>
+ * 
+ * <pre>{@code
+ * Dealer dealer = new Dealer();
+ * Hand hand = new Hand();
+ * hand.add(Card.Rank.ACE);
+ * hand.add(Card.Rank.KING);
+ * dealer.addHand(hand);
+ * assertEquals(hand, dealer.getHand());
+ * Dealer clonedDealer = dealer.clone();
+ * assertNotSame(dealer, clonedDealer);
+ * assertEquals(dealer.getHand(), clonedDealer.getHand());
+ * }</pre>
  */
 public class DealerTest {
 
@@ -21,8 +43,8 @@ public class DealerTest {
   private Hand hand3;
 
   /**
-   * Setup method to initialize a new Dealer instance and sample Hands before each
-   * test.
+   * Setup method to initialize a new {@link Dealer} instance and sample
+   * {@link Hand}s before each test.
    */
   @Before
   public void setUp() {
@@ -45,19 +67,23 @@ public class DealerTest {
   }
 
   /**
-   * Helper method to compare two Hands for equality based on their contents.
+   * Helper method to compare two {@link Hand} instances for equality based on
+   * their contents.
    *
-   * @param expected The expected Hand.
-   * @param actual   The actual Hand.
+   * @param expected The expected {@link Hand}.
+   * @param actual   The actual {@link Hand}.
    */
   private void assertHandsEqual(Hand expected, Hand actual) {
     if (expected == null && actual == null) {
-      return; // Both are null, considered equal
+      return;
     }
+
     if (expected == null || actual == null) {
       fail("One of the hands is null while the other is not.");
     }
+
     assertEquals("Hands should have the same number of cards", expected.getSize(), actual.getSize());
+
     for (int i = 0; i < expected.getSize(); i++) {
       Card expectedCard = expected.getCards().get(i);
       Card actualCard = actual.getCards().get(i);
@@ -77,12 +103,15 @@ public class DealerTest {
     if (hand == null) {
       return 0;
     }
+
     int count = 0;
+
     for (Card card : hand.getCards()) {
       if (card.getRank().equals(rank)) {
         count++;
       }
     }
+
     return count;
   }
 
@@ -93,6 +122,13 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer} default constructor initializes correctly with an
    * empty hand.
+   * <p>
+   * Scenario: Creating a {@code Dealer} instance using the default constructor.
+   * </p>
+   * <p>
+   * Expected Outcome: A non-null {@code Dealer} object is instantiated with an
+   * empty {@link Hand}.
+   * </p>
    */
   @Test
   public void testDefaultConstructor() {
@@ -104,6 +140,14 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer} parameterized constructor initializes correctly with
    * a predefined hand.
+   * <p>
+   * Scenario: Creating a {@code Dealer} instance with a predefined {@link Hand}
+   * (hand1).
+   * </p>
+   * <p>
+   * Expected Outcome: A non-null {@code Dealer} object is instantiated with the
+   * specified hand.
+   * </p>
    */
   @Test
   public void testParameterizedConstructorWithHand() {
@@ -115,6 +159,12 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer} parameterized constructor throws
    * {@link IllegalArgumentException} when initialized with a null hand.
+   * <p>
+   * Scenario: Attempting to create a {@code Dealer} with a {@code null} hand.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testParameterizedConstructorWithNullHand() {
@@ -128,6 +178,12 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer#addHand(Hand)} method by adding a valid hand to the
    * dealer.
+   * <p>
+   * Scenario: Adding a predefined {@link Hand} (hand1) to the dealer.
+   * </p>
+   * <p>
+   * Expected Outcome: The dealer's hand matches the added hand.
+   * </p>
    */
   @Test
   public void testAddHandValid() {
@@ -139,7 +195,10 @@ public class DealerTest {
    * Tests the {@link Dealer#addHand(Hand)} method by attempting to add a null
    * hand.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Adding a {@code null} hand to the dealer.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -150,7 +209,13 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer#addHand(Hand)} method by adding a hand when one
    * already exists.
-   * The existing hand should be replaced with the new hand.
+   * <p>
+   * Scenario: Adding a new {@link Hand} (hand2) when the dealer already has an
+   * existing hand (hand1). The existing hand should be replaced.
+   * </p>
+   * <p>
+   * Expected Outcome: The dealer's hand is updated to the new hand (hand2).
+   * </p>
    */
   @Test
   public void testAddHandWhenExistingHandPresent() {
@@ -167,6 +232,13 @@ public class DealerTest {
 
   /**
    * Tests retrieving the hand when a hand is present.
+   * <p>
+   * Scenario: The dealer has an existing hand (hand1). Retrieving the hand should
+   * return the correct hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The retrieved hand matches the existing hand (hand1).
+   * </p>
    */
   @Test
   public void testGetHandWithHandSet() {
@@ -177,6 +249,13 @@ public class DealerTest {
 
   /**
    * Tests retrieving the hand when no hand is set.
+   * <p>
+   * Scenario: The dealer has not been assigned any hand. Retrieving the hand
+   * should return an empty {@link Hand}.
+   * </p>
+   * <p>
+   * Expected Outcome: The retrieved hand is empty.
+   * </p>
    */
   @Test
   public void testGetHandWithNoHandSet() {
@@ -186,7 +265,16 @@ public class DealerTest {
   }
 
   /**
-   * Tests that {@link Dealer#getHand()} returns the internal Hand directly.
+   * Tests that {@link Dealer#getHand()} returns the internal {@link Hand}
+   * directly.
+   * <p>
+   * Scenario: After adding a hand to the dealer, retrieving the hand should
+   * return the exact internal instance.
+   * </p>
+   * <p>
+   * Expected Outcome: The retrieved hand is the same instance as the internal
+   * hand.
+   * </p>
    */
   @Test
   public void testGetHandReturnsInternalHand() {
@@ -201,6 +289,14 @@ public class DealerTest {
 
   /**
    * Tests cloning a dealer with a hand.
+   * <p>
+   * Scenario: Cloning a {@code Dealer} instance that has an existing hand
+   * (hand1).
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned dealer is a different instance with a deep copy
+   * of the hand.
+   * </p>
    */
   @Test
   public void testCloneWithHand() {
@@ -216,10 +312,16 @@ public class DealerTest {
 
   /**
    * Tests cloning a dealer with an empty hand.
+   * <p>
+   * Scenario: Cloning a {@code Dealer} instance that has an empty hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned dealer is a different instance with an empty
+   * hand.
+   * </p>
    */
   @Test
   public void testCloneWithEmptyHand() {
-    // Dealer was initialized with an empty Hand
     Dealer clonedDealer = dealer.clone();
     assertNotNull("Cloned dealer should not be null", clonedDealer);
     assertNotSame("Cloned dealer should be a different instance", dealer, clonedDealer);
@@ -232,19 +334,24 @@ public class DealerTest {
   /**
    * Tests that modifying the original dealer's hand does not affect the cloned
    * dealer's hand.
+   * <p>
+   * Scenario: After cloning a dealer, modifying the original dealer's hand should
+   * not impact the cloned dealer's hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned dealer's hand remains unchanged despite
+   * modifications
+   * to the original dealer's hand.
+   * </p>
    */
   @Test
   public void testCloneDeepCopyIndependence() {
     Dealer dealerWithHand = new Dealer(hand1);
     Dealer clonedDealer = dealerWithHand.clone();
-
-    // Modify the original dealer's hand
     Hand originalHand = dealerWithHand.getHand();
     originalHand.add(Card.Rank.FIVE);
-
-    // The cloned dealer's hand should not reflect the new card as it's a different
-    // instance
     Hand clonedHand = clonedDealer.getHand();
+
     assertEquals("Cloned dealer's hand should reflect the original hand", 2,
         clonedHand.getSize());
     assertTrue("Cloned dealer's hand should contain the new card",
@@ -254,13 +361,20 @@ public class DealerTest {
   /**
    * Tests that the {@link Dealer#clone()} method creates an exact deep copy when
    * a hand is present.
+   * <p>
+   * Scenario: Cloning a {@code Dealer} with a hand containing two TENs (hand2).
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned dealer is a different instance with a deep copy
+   * of the
+   * hand, maintaining the same card ranks.
+   * </p>
    */
   @Test
   public void testCloneCreatesExactDeepCopy() {
-    Dealer dealerWithHand = new Dealer(hand2); // hand2 has two TENs
+    Dealer dealerWithHand = new Dealer(hand2);
     Dealer clonedDealer = dealerWithHand.clone();
 
-    // Verify clonedDealer's hand is equal but not the same instance
     assertNotNull("Cloned dealer should not be null", clonedDealer);
     assertNotSame("Cloned dealer should be a different instance", dealerWithHand, clonedDealer);
     assertNotSame("Cloned dealer's hand should be a different instance", dealerWithHand.getHand(),
@@ -268,9 +382,9 @@ public class DealerTest {
     assertHandsEqual(dealerWithHand.getHand(),
         clonedDealer.getHand());
 
-    // Verify cloned hand's contents are the same
     assertEquals("Cloned hand should have the same size", dealerWithHand.getHand().getSize(),
         clonedDealer.getHand().getSize());
+
     for (int i = 0; i < dealerWithHand.getHand().getSize(); i++) {
       assertEquals("Cloned hand's card rank should match the original",
           dealerWithHand.getHand().getCards().get(i).getRank(),
@@ -285,6 +399,14 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer#toString()} method returns the correct string
    * representation when a hand is present.
+   * <p>
+   * Scenario: The dealer has an existing hand (hand1). The {@code toString()}
+   * method
+   * should return the hand's string representation.
+   * </p>
+   * <p>
+   * Expected Outcome: The string representation matches the hand's string.
+   * </p>
    */
   @Test
   public void testToStringWithHand() {
@@ -296,20 +418,26 @@ public class DealerTest {
   /**
    * Tests the {@link Dealer#toString()} method returns the correct string
    * representation after hand modifications.
+   * <p>
+   * Scenario: After adding a new card to the dealer's hand, the
+   * {@code toString()}
+   * method should reflect the updated hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The initial {@code toString()} remains unchanged, and the
+   * modified {@code toString()} reflects the new card.
+   * </p>
    */
   @Test
   public void testToStringAfterHandModification() {
     Dealer dealerWithHand = new Dealer(hand1);
     String initialString = dealerWithHand.toString();
 
-    // Modify the dealer's hand
     dealerWithHand.getHand().add(Card.Rank.FIVE);
     String modifiedString = dealerWithHand.toString();
 
-    // The initial toString should not change as it was captured before modification
     assertEquals("Initial toString should remain unchanged", initialString, initialString);
 
-    // The modified toString should reflect the new card
     String expectedModifiedString = dealerWithHand.getHand().toString();
     assertEquals("toString should reflect the modified hand", expectedModifiedString, modifiedString);
   }
@@ -321,6 +449,14 @@ public class DealerTest {
   /**
    * Tests adding multiple hands sequentially and verifying each addition
    * correctly replaces the previous hand.
+   * <p>
+   * Scenario: Sequentially adding hand1, hand2, and hand3 to the dealer. Each new
+   * addition should replace the existing hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The dealer's hand matches the most recently added hand each
+   * time.
+   * </p>
    */
   @Test
   public void testAddMultipleHandsSequentially() {
@@ -337,6 +473,15 @@ public class DealerTest {
   /**
    * Tests that the {@link Dealer#addHand(Hand)} method correctly clones the hand
    * before assigning.
+   * <p>
+   * Scenario: Adding a hand to the dealer and verifying that the dealer's
+   * internal
+   * hand is a clone of the original hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The internal hand is a different instance but contains the
+   * same card ranks as the original.
+   * </p>
    */
   @Test
   public void testAddHandCloning() {

@@ -33,10 +33,13 @@ import org.junit.Test;
  */
 public class HandTest {
 
-  private Hand hand; // The Hand instance used in tests
+  private Hand hand;
 
   /**
    * Setup method to initialize a new {@link Hand} instance before each test.
+   * <p>
+   * Ensures that the hand is initialized as empty before each test case.
+   * </p>
    */
   @Before
   public void setUp() {
@@ -65,6 +68,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand} constructor initializes correctly.
+   * <p>
+   * Scenario: Creating a {@code Hand} instance using the default constructor.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand is not null and has an initial size of 0.
+   * </p>
    */
   @Test
   public void testConstructor() {
@@ -78,6 +87,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#add(Card.Rank)} method with a valid rank.
+   * <p>
+   * Scenario: Adding a valid rank (JACK) to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size increases by 1 and contains the added rank.
+   * </p>
    */
   @Test
   public void testAddValidRank() {
@@ -88,6 +103,13 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#add(Card.Rank)} method with multiple valid ranks.
+   * <p>
+   * Scenario: Adding multiple valid ranks (ACE, KING, FIVE) to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size reflects the number of added cards, and all
+   * added ranks are present in the hand.
+   * </p>
    */
   @Test
   public void testAddMultipleValidRanks() {
@@ -102,6 +124,13 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#add(Card.Rank)} method with duplicate ranks.
+   * <p>
+   * Scenario: Adding multiple instances of the same rank (TEN) to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size increases accordingly, and the hand contains
+   * all instances of the added rank.
+   * </p>
    */
   @Test
   public void testAddDuplicateRanks() {
@@ -118,7 +147,10 @@ public class HandTest {
   /**
    * Tests the {@link Hand#add(Card.Rank)} method with a {@code null} rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Attempting to add a {@code null} rank to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -133,6 +165,13 @@ public class HandTest {
   /**
    * Tests the {@link Hand#remove(Card.Rank)} method with a rank that exists in
    * the hand.
+   * <p>
+   * Scenario: Removing an existing rank (KING) from the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size decreases by 1, and one instance of the
+   * rank is removed while others remain if duplicates exist.
+   * </p>
    */
   @Test
   public void testRemoveExistingRank() {
@@ -144,7 +183,6 @@ public class HandTest {
     hand.remove(Card.Rank.KING);
     assertEquals("Hand size should decrease by 1 after removing a KING", 2, hand.getSize());
 
-    // Ensure one KING is still present
     int kingCount = countRankInHand(Card.Rank.KING);
     assertEquals("Hand should contain one KING after removal", 1, kingCount);
   }
@@ -152,6 +190,13 @@ public class HandTest {
   /**
    * Tests the {@link Hand#remove(Card.Rank)} method removes all instances of a
    * duplicated rank.
+   * <p>
+   * Scenario: Removing all instances of a rank (NINE) from the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size becomes 0, and the rank no longer exists in
+   * the hand.
+   * </p>
    */
   @Test
   public void testRemoveAllInstancesOfRank() {
@@ -172,7 +217,11 @@ public class HandTest {
    * Tests the {@link Hand#remove(Card.Rank)} method with a rank that does not
    * exist in the hand.
    * <p>
-   * Expects an {@link IllegalStateException} to be thrown.
+   * Scenario: Attempting to remove a rank (KING) that has no instances in the
+   * hand.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalStateException} is thrown.
    * </p>
    */
   @Test(expected = IllegalStateException.class)
@@ -185,7 +234,10 @@ public class HandTest {
   /**
    * Tests the {@link Hand#remove(Card.Rank)} method with a {@code null} rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Attempting to remove a {@code null} rank from the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -200,6 +252,12 @@ public class HandTest {
   /**
    * Tests the {@link Hand#contains(Card.Rank)} method for a rank that exists in
    * the hand.
+   * <p>
+   * Scenario: Checking if the hand contains an existing rank (FIVE).
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns {@code true}.
+   * </p>
    */
   @Test
   public void testContainsExistingRank() {
@@ -210,6 +268,12 @@ public class HandTest {
   /**
    * Tests the {@link Hand#contains(Card.Rank)} method for a rank that does not
    * exist in the hand.
+   * <p>
+   * Scenario: Checking if the hand contains a non-existing rank (TWO).
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns {@code false}.
+   * </p>
    */
   @Test
   public void testContainsNonExistingRank() {
@@ -220,7 +284,10 @@ public class HandTest {
   /**
    * Tests the {@link Hand#contains(Card.Rank)} method with a {@code null} rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Attempting to check containment of a {@code null} rank.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -234,6 +301,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#evaluateHand()} method with no cards.
+   * <p>
+   * Scenario: Evaluating an empty hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns 0.
+   * </p>
    */
   @Test
   public void testEvaluateHandEmpty() {
@@ -243,6 +316,12 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with multiple cards, including
    * an ace counted as 11.
+   * <p>
+   * Scenario: Adding ACE and SEVEN to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The ace is counted as 11, resulting in a total of 18.
+   * </p>
    */
   @Test
   public void testEvaluateHandWithAceAsEleven() {
@@ -254,6 +333,12 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with an ace that must be counted
    * as 1 to prevent busting.
+   * <p>
+   * Scenario: Adding ACE, TEN, and TWO to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The ace is counted as 1, resulting in a total of 13.
+   * </p>
    */
   @Test
   public void testEvaluateHandWithAceAsOne() {
@@ -265,6 +350,13 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#evaluateHand()} method with multiple aces.
+   * <p>
+   * Scenario: Adding two ACEs and a NINE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: One ace is counted as 11 and the other as 1, resulting in a
+   * total of 21.
+   * </p>
    */
   @Test
   public void testEvaluateHandMultipleAces() {
@@ -279,6 +371,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#evaluateHand()} method with high cards.
+   * <p>
+   * Scenario: Adding KING, QUEEN, and JACK to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The total is 30.
+   * </p>
    */
   @Test
   public void testEvaluateHandHighCards() {
@@ -291,15 +389,21 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with a combination that includes
    * multiple aces and high cards.
+   * <p>
+   * Scenario: Adding two ACEs, SEVEN, and THREE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: Both aces are counted as 1 to prevent busting, resulting in
+   * a total of 12.
+   * </p>
    */
   @Test
   public void testEvaluateHandComplexCombination() {
-    hand.add(Card.Rank.ACE); // 1 or 11
-    hand.add(Card.Rank.ACE); // 1 or 11
-    hand.add(Card.Rank.SEVEN); // 7
-    hand.add(Card.Rank.THREE); // 3
-    // Total: 1+1+7+3 = 12 or 11+1+7+3 = 22 or 1+11+7+3 = 22
-    // Should count both Aces as 1 to avoid busting: Total = 12
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.SEVEN);
+    hand.add(Card.Rank.THREE);
+
     assertEquals("Hand should evaluate to 12 with multiple Aces avoiding busting", 12, hand.evaluateHand());
     assertFalse("isSoftHand should return false as Aces are counted as 1", hand.isSoftHand());
   }
@@ -307,26 +411,38 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with maximum possible hand
    * without busting.
+   * <p>
+   * Scenario: Adding ACE, EIGHT, and TWO to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The ace is counted as 11, resulting in a total of 21.
+   * </p>
    */
   @Test
   public void testEvaluateHandMaxWithoutBusting() {
-    hand.add(Card.Rank.ACE); // 11
-    hand.add(Card.Rank.EIGHT); // 8
-    hand.add(Card.Rank.TWO); // 2
-    // Total: 11 + 8 + 2 = 21
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.EIGHT);
+    hand.add(Card.Rank.TWO);
+
     assertEquals("Hand should evaluate to 21", 21, hand.evaluateHand());
     assertTrue("isSoftHand should return true as Ace is counted as 11", hand.isSoftHand());
   }
 
   /**
    * Tests the {@link Hand#evaluateHand()} method with busting condition.
+   * <p>
+   * Scenario: Adding KING, QUEEN, and JACK to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The total is 30, indicating a bust.
+   * </p>
    */
   @Test
   public void testEvaluateHandBust() {
-    hand.add(Card.Rank.KING); // 10
-    hand.add(Card.Rank.QUEEN); // 10
-    hand.add(Card.Rank.JACK); // 10
-    // Total: 30
+    hand.add(Card.Rank.KING);
+    hand.add(Card.Rank.QUEEN);
+    hand.add(Card.Rank.JACK);
+
     assertEquals("Hand should evaluate to 30", 30, hand.evaluateHand());
     assertFalse("isSoftHand should return false when busting", hand.isSoftHand());
   }
@@ -337,6 +453,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#isSoftHand()} method for a soft hand.
+   * <p>
+   * Scenario: Adding ACE and SEVEN to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand is considered soft since the ace is counted as 11.
+   * </p>
    */
   @Test
   public void testIsSoftHandTrue() {
@@ -347,6 +469,14 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#isSoftHand()} method for a hard hand.
+   * <p>
+   * Scenario: Adding ACE, TEN, and FIVE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand is considered hard since the ace must be counted
+   * as
+   * 1 to prevent busting.
+   * </p>
    */
   @Test
   public void testIsSoftHandFalse() {
@@ -358,6 +488,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#isSoftHand()} method with no aces.
+   * <p>
+   * Scenario: Adding TWO and THREE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand is not soft as there are no aces.
+   * </p>
    */
   @Test
   public void testIsSoftHandNoAces() {
@@ -372,6 +508,15 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#getCards()} method returns a defensive copy.
+   * <p>
+   * Scenario: Retrieving the list of cards and attempting to modify it
+   * externally.
+   * </p>
+   * <p>
+   * Expected Outcome: Modifications to the retrieved list do not affect the
+   * original
+   * hand.
+   * </p>
    */
   @SuppressWarnings("unlikely-arg-type")
   @Test
@@ -384,7 +529,6 @@ public class HandTest {
     assertTrue("Retrieved cards should contain FOUR", retrievedCards.contains(new Card(Card.Rank.FOUR)));
     assertTrue("Retrieved cards should contain FIVE", retrievedCards.contains(new Card(Card.Rank.FIVE)));
 
-    // Modify the retrieved list and ensure the original hand is unaffected
     retrievedCards.remove(Card.Rank.FOUR);
     assertEquals("Modifying retrieved list should not affect the original hand", 2, hand.getSize());
     assertTrue("Original hand should still contain FOUR", hand.contains(Card.Rank.FOUR));
@@ -397,6 +541,13 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#setCards(List)} method with a valid list of ranks.
+   * <p>
+   * Scenario: Setting a new list of ranks (NINE, TEN, ACE) to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size matches the set list size, and all specified
+   * ranks are present in the hand.
+   * </p>
    */
   @Test
   public void testSetCardsValidList() {
@@ -411,6 +562,12 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#setCards(List)} method with an empty list.
+   * <p>
+   * Scenario: Setting an empty list of ranks to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand size becomes 0.
+   * </p>
    */
   @Test
   public void testSetCardsEmptyList() {
@@ -423,7 +580,10 @@ public class HandTest {
   /**
    * Tests the {@link Hand#setCards(List)} method with a {@code null} list.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Attempting to set a {@code null} list of ranks to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -435,7 +595,10 @@ public class HandTest {
    * Tests the {@link Hand#setCards(List)} method with a list containing a
    * {@code null} rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown.
+   * Scenario: Setting a list of ranks that includes a {@code null} element.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -450,6 +613,13 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#getSize()} method reflects the correct number of cards.
+   * <p>
+   * Scenario: Adding and removing cards from the hand and verifying the size
+   * accordingly.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns the accurate count of cards in the hand.
+   * </p>
    */
   @Test
   public void testGetSize() {
@@ -473,6 +643,13 @@ public class HandTest {
   /**
    * Tests the {@link Hand#clone()} method creates an accurate deep copy of the
    * hand.
+   * <p>
+   * Scenario: Cloning a hand containing KING, QUEEN, and ACE.
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned hand is a separate instance with identical card
+   * ranks, and modifications to the original hand do not affect the cloned hand.
+   * </p>
    */
   @Test
   public void testClone() {
@@ -492,17 +669,21 @@ public class HandTest {
           originalCards.get(i).getRank(), clonedCards.get(i).getRank());
     }
 
-    // Modify the original hand and ensure the clone does not change
     hand.remove(Card.Rank.KING);
     assertEquals("Original hand size should decrease after removal", 2, hand.getSize());
 
-    // Ensure the cloned hand still contains KING
     assertTrue("Cloned hand should still contain KING after original hand removal",
         clonedHand.contains(Card.Rank.KING));
   }
 
   /**
    * Tests the {@link Hand#clone()} method on an empty hand.
+   * <p>
+   * Scenario: Cloning an empty hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The cloned hand is a separate instance with a size of 0.
+   * </p>
    */
   @Test
   public void testCloneEmptyHand() {
@@ -518,23 +699,36 @@ public class HandTest {
   /**
    * Tests the {@link Hand#toString()} method returns the correct string
    * representation.
+   * <p>
+   * Scenario: Adding THREE, FIVE, and ACE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The string representation lists all cards separated by
+   * commas and includes the total value of the hand.
+   * </p>
    */
   @Test
   public void testToString() {
     hand.add(Card.Rank.THREE);
     hand.add(Card.Rank.FIVE);
     hand.add(Card.Rank.ACE);
-    String expected = "Three, Five, Ace - 19 Total"; // ACE counted as 11
+    String expected = "Three, Five, Ace - 19 Total";
     assertEquals("toString should return the correct string representation", expected, hand.toString());
 
-    // Adding a card that causes ACE to be counted as 1
     hand.add(Card.Rank.TEN);
-    expected = "Three, Five, Ace, Ten - 19 Total"; // ACE counted as 1 to prevent busting
+    expected = "Three, Five, Ace, Ten - 19 Total";
     assertEquals("toString should adjust ACE value correctly", expected, hand.toString());
   }
 
   /**
    * Tests the {@link Hand#toString()} method on an empty hand.
+   * <p>
+   * Scenario: Evaluating the string representation of an empty hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns a string indicating no cards and a total
+   * of 0.
+   * </p>
    */
   @Test
   public void testToStringEmptyHand() {
@@ -549,11 +743,17 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with a large number of low
    * cards.
+   * <p>
+   * Scenario: Adding ten TWOs to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: The hand evaluates to 20, and it is not a soft hand.
+   * </p>
    */
   @Test
   public void testEvaluateHandWithManyLowCards() {
     for (int i = 0; i < 10; i++) {
-      hand.add(Card.Rank.TWO); // 2 * 10 = 20
+      hand.add(Card.Rank.TWO);
     }
     assertEquals("Hand should evaluate to 20 with ten TWOs", 20, hand.evaluateHand());
     assertFalse("isSoftHand should return false as there are no Aces", hand.isSoftHand());
@@ -561,13 +761,20 @@ public class HandTest {
 
   /**
    * Tests the {@link Hand#evaluateHand()} method with multiple Aces and exact 21.
+   * <p>
+   * Scenario: Adding two ACEs and a NINE to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: One ace is counted as 11 and the other as 1, resulting in
+   * a total of 21, and the hand is soft.
+   * </p>
    */
   @Test
   public void testEvaluateHandMultipleAcesExact21() {
-    hand.add(Card.Rank.ACE); // 11
-    hand.add(Card.Rank.ACE); // 11 or 1
-    hand.add(Card.Rank.NINE); // 9
-    // Total: 11 + 1 + 9 = 21
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.NINE);
+
     assertEquals("Hand should evaluate to 21 with one Ace counted as 11", 21, hand.evaluateHand());
     assertTrue("isSoftHand should return true as one Ace is counted as 11", hand.isSoftHand());
   }
@@ -575,13 +782,20 @@ public class HandTest {
   /**
    * Tests the {@link Hand#evaluateHand()} method with a combination of multiple
    * Aces and exact 21.
+   * <p>
+   * Scenario: Adding two ACEs and a TEN to the hand.
+   * </p>
+   * <p>
+   * Expected Outcome: Both aces are counted as 1 to prevent busting, resulting in
+   * a total of 12, and the hand is not soft.
+   * </p>
    */
   @Test
   public void testEvaluateHandMultipleAcesExact21DifferentCombination() {
-    hand.add(Card.Rank.ACE); // 11
-    hand.add(Card.Rank.ACE); // 1
-    hand.add(Card.Rank.TEN); // 10
-    // Total: 11 + 1 + 10 = 22 -> Aces adjust to 1 each
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.ACE);
+    hand.add(Card.Rank.TEN);
+
     assertEquals("Hand should evaluate to 12 with two Aces counted as 1 to prevent busting", 12, hand.evaluateHand());
     assertFalse("isSoftHand should return false as both Aces are counted as 1", hand.isSoftHand());
   }

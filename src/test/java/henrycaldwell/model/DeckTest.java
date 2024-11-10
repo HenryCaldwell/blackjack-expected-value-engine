@@ -15,14 +15,34 @@ import org.junit.Test;
 import henrycaldwell.controller.GameRules;
 
 /**
- * Test suite for the Deck class.
+ * Test suite for the {@link Deck} class.
+ * <p>
+ * This class contains unit tests to verify the correctness of the {@link Deck}
+ * class, including its constructors, {@code initializeDeck}, {@code add},
+ * {@code remove}, {@code contains}, {@code getCards}, {@code getSize},
+ * {@code getCount}, {@code getValueCounts}, and {@code toString} methods.
+ * </p>
+ * <p>
+ * Example usage:
+ * </p>
+ * 
+ * <pre>{@code
+ * Deck deck = new Deck();
+ * deck.remove(Card.Rank.ACE);
+ * assertFalse(deck.contains(Card.Rank.ACE));
+ * double count = deck.getCount();
+ * }</pre>
  */
 public class DeckTest {
 
   private Deck deck;
 
   /**
-   * Setup method to initialize a new Deck instance before each test.
+   * Setup method to initialize a new {@link Deck} instance before each test.
+   * <p>
+   * Ensures that the deck is initialized according to the current
+   * {@link GameRules}.
+   * </p>
    */
   @Before
   public void setUp() {
@@ -32,7 +52,7 @@ public class DeckTest {
 
   /**
    * Helper method to count occurrences of a specific rank in the deck.
-   * 
+   *
    * @param rank The rank to count.
    * @return The number of times the rank appears in the deck.
    */
@@ -55,8 +75,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck} constructor initializes correctly.
    * <p>
-   * Verifies that the deck is not null, has the correct initial size based on
-   * {@link GameRules.NUMBER_OF_DECKS}, and that the count is initialized to 0.
+   * Scenario: Creating a {@code Deck} instance using the default constructor.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck is not null, has the correct initial size based on
+   * {@link GameRules.NUMBER_OF_DECKS}, and the count is initialized to 0.
    * </p>
    */
   @Test
@@ -75,29 +98,27 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#initializeDeck()} method correctly resets the deck.
    * <p>
-   * Modifies the deck by removing a card, resets it, and verifies that the deck
-   * size and count are restored to their initial values.
+   * Scenario: Modifying the deck by removing a card, then resetting it.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck size and count are restored to their initial
+   * values.
    * </p>
    */
   @Test
   public void testInitializeDeck() {
-    // Modify the deck by removing a card
     deck.remove(Card.Rank.ACE);
 
-    // Ensure the deck size has decreased by 1
     assertEquals("Deck size should decrease by 1 after removing a card",
         GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length - 1,
         deck.getSize());
 
-    // Reset the deck
     deck.initializeDeck();
 
-    // Check if the deck is back to initial size
     assertEquals("Deck size should be reset to initial size",
         GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length,
         deck.getSize());
 
-    // Check if count is reset
     assertEquals("Count should be reset to 0 after reset", 0.0, deck.getCount(), 0.0001);
   }
 
@@ -108,8 +129,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#add(Card.Rank)} method with a valid rank.
    * <p>
-   * Adds a rank to the deck and verifies that the deck size increases by 1 and
-   * that the count reflects the addition appropriately.
+   * Scenario: Adding a valid rank (JACK) to the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck size increases by 1 and contains an extra instance
+   * of the added rank.
    * </p>
    */
   @Test
@@ -129,8 +153,10 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#add(Card.Rank)} method with a null rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown when attempting to
-   * add a null rank.
+   * Scenario: Attempting to add a {@code null} rank to the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -141,9 +167,11 @@ public class DeckTest {
   /**
    * Tests adding multiple instances of the same rank to the deck.
    * <p>
-   * Adds two identical ranks and verifies that the deck size increases
-   * accordingly
-   * and that the count reflects the additions.
+   * Scenario: Adding two identical ranks (THREE) to the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck size increases accordingly and the count reflects
+   * the additions.
    * </p>
    */
   @Test
@@ -171,10 +199,12 @@ public class DeckTest {
    * Tests the {@link Deck#remove(Card.Rank)} method with a rank that exists in
    * the deck.
    * <p>
-   * Removes a rank from the deck and verifies that the deck size decreases by 1,
-   * the count is updated correctly, and the deck still contains remaining
-   * instances
-   * of the rank if multiple exist.
+   * Scenario: Removing an existing rank (KING) from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck size decreases by 1, the count is updated
+   * correctly, and the deck still contains remaining instances of the rank if
+   * multiple exist.
    * </p>
    */
   @Test
@@ -183,24 +213,16 @@ public class DeckTest {
     int initialSize = deck.getSize();
     double initialCount = deck.getCount();
 
-    // Ensure the deck contains the rank
     assertTrue("Deck should contain the rank to be removed", deck.contains(rankToRemove));
 
-    // Remove the rank
     deck.remove(rankToRemove);
 
-    // Check if the deck size has decreased by 1
     assertEquals("Deck size should decrease by 1 after removing a rank",
         initialSize - 1, deck.getSize());
 
-    // Check if the count has been updated correctly
-    // Since KING has a value of 10, count should have been incremented by 1
     double expectedCount = (initialCount + 1) / ((initialSize - 1) / 52.0);
     assertEquals("Count should be incremented by 1 after removing a KING", expectedCount, deck.getCount(), 0.0001);
 
-    // Ensure the deck no longer contains the removed rank if all instances are
-    // removed
-    // Since multiple instances might exist, ensure at least one is removed
     assertTrue("Deck should still contain the rank if multiple instances exist",
         countRankInDeck(rankToRemove) == (GameRules.NUMBER_OF_DECKS * 4 - 1));
   }
@@ -209,9 +231,12 @@ public class DeckTest {
    * Tests the {@link Deck#remove(Card.Rank)} method with a rank that does not
    * exist in the deck.
    * <p>
-   * Attempts to remove a rank that has no remaining instances in the deck and
-   * expects
-   * an {@link IllegalStateException} to be thrown.
+   * Scenario: Attempting to remove a rank (ACE) that has no remaining instances
+   * in
+   * the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalStateException} is thrown.
    * </p>
    */
   @Test(expected = IllegalStateException.class)
@@ -231,8 +256,10 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#remove(Card.Rank)} method with a null rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown when attempting to
-   * remove a null rank.
+   * Scenario: Attempting to remove a {@code null} rank from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -243,8 +270,11 @@ public class DeckTest {
   /**
    * Tests removing all instances of a specific rank from the deck.
    * <p>
-   * Removes all instances of a given rank and verifies that the deck no longer
-   * contains that rank and that the count is updated appropriately.
+   * Scenario: Removing all instances of a given rank (EIGHT) from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck no longer contains that rank and the count is
+   * updated appropriately.
    * </p>
    */
   @Test
@@ -252,12 +282,10 @@ public class DeckTest {
     Card.Rank rankToRemove = Card.Rank.EIGHT;
     int numberOfEights = GameRules.NUMBER_OF_DECKS * 4;
 
-    // Remove all instances
     for (int i = 0; i < numberOfEights; i++) {
       deck.remove(rankToRemove);
     }
 
-    // Ensure no more instances exist
     assertFalse("Deck should not contain any instances of EIGHT after removal", deck.contains(rankToRemove));
     assertEquals("Count should reflect the removal of all EIGHTs (value=8 does not affect count)", 0.0, deck.getCount(),
         0.0001);
@@ -271,8 +299,10 @@ public class DeckTest {
    * Tests the {@link Deck#contains(Card.Rank)} method for a rank that exists in
    * the deck.
    * <p>
-   * Verifies that the method returns {@code true} when the deck contains the
-   * specified rank.
+   * Scenario: Checking if the deck contains an existing rank (QUEEN).
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns {@code true}.
    * </p>
    */
   @Test
@@ -285,13 +315,14 @@ public class DeckTest {
    * Tests the {@link Deck#contains(Card.Rank)} method for a rank that does not
    * exist in the deck.
    * <p>
-   * Removes all instances of a rank and verifies that the method returns
-   * {@code false}.
+   * Scenario: Removing all instances of a rank (NINE) and checking containment.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns {@code false}.
    * </p>
    */
   @Test
   public void testContainsNonExistingRank() {
-    // Remove all NINES from the deck
     Card.Rank rankToRemove = Card.Rank.NINE;
     int numberOfNines = GameRules.NUMBER_OF_DECKS * 4;
 
@@ -299,15 +330,16 @@ public class DeckTest {
       deck.remove(rankToRemove);
     }
 
-    // Now, the deck should not contain any NINE
     assertFalse("Deck should not contain NINE after removing all instances", deck.contains(rankToRemove));
   }
 
   /**
    * Tests the {@link Deck#contains(Card.Rank)} method with a null rank.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown when attempting to
-   * check containment of a null rank.
+   * Scenario: Attempting to check containment of a {@code null} rank.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -322,7 +354,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#getCards()} method.
    * <p>
-   * Verifies that the method returns a non-null list of cards with the correct
+   * Scenario: Retrieving the list of cards from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns a non-null list of cards with the
+   * correct
    * size.
    * </p>
    */
@@ -342,8 +378,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#getSize()} method.
    * <p>
-   * Verifies that the method returns the correct number of cards after various
-   * operations such as adding and removing ranks.
+   * Scenario: Verifying the deck size after various operations such as adding
+   * and removing ranks.
+   * </p>
+   * <p>
+   * Expected Outcome: The method returns the correct number of cards in the deck.
    * </p>
    */
   @Test
@@ -352,13 +391,11 @@ public class DeckTest {
         GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length,
         deck.getSize());
 
-    // Add a rank and check size
     deck.add(Card.Rank.TWO);
     assertEquals("Deck size should increase by 1 after adding a rank",
         GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length + 1,
         deck.getSize());
 
-    // Remove a rank and check size
     deck.remove(Card.Rank.TWO);
     assertEquals("Deck size should decrease by 1 after removing a rank",
         GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length,
@@ -372,39 +409,36 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#getCount()} method.
    * <p>
-   * Verifies that the count accurately reflects the current count based on
-   * the cards removed or added.
+   * Scenario: Verifying that the count accurately reflects the current count
+   * based on the cards removed or added.
+   * </p>
+   * <p>
+   * Expected Outcome: The count is correctly updated after each operation.
    * </p>
    */
   @Test
   public void testGetCount() {
     int initialSize = deck.getSize();
 
-    // Initial count should be 0
     assertEquals("Initial count should be 0", 0.0, deck.getCount(), 0.0001);
 
-    // Remove a high card (ACE, value=1) which increments count
     deck.remove(Card.Rank.ACE);
     assertEquals("Count should be incremented by 1 after removing an ACE", (1 / ((initialSize - 1) / 52.0)),
         deck.getCount(), 0.0001);
 
-    // Remove a low card (FIVE, value=5) which decrements count
     deck.remove(Card.Rank.FIVE);
     assertEquals("Count should be back to 0 after removing a FIVE", 0.0,
         deck.getCount(), 0.0001);
 
-    // Remove a neutral card (SEVEN, value=7) which does not affect count
     deck.remove(Card.Rank.SEVEN);
     assertEquals("Count should remain 0 after removing a SEVEN", 0.0,
         deck.getCount(), 0.0001);
 
-    // Remove another high card (KING, value=10)
     deck.remove(Card.Rank.KING);
     assertEquals("Count should be incremented by 1 after removing a KING", (1 / ((initialSize - 4)
         / 52.0)),
         deck.getCount(), 0.0001);
 
-    // Remove another low card (TWO, value=2)
     deck.remove(Card.Rank.TWO);
     assertEquals("Count should be back to 0 after removing a TWO",
         0.0, deck.getCount(), 0.0001);
@@ -414,21 +448,21 @@ public class DeckTest {
    * Tests the {@link Deck#getCount()} method when the deck becomes empty to avoid
    * division by zero.
    * <p>
-   * Verifies that the count is handled gracefully and returns 0.0 when the deck
-   * is empty.
+   * Scenario: Removing all cards from the deck and verifying that the count
+   * is handled gracefully.
+   * </p>
+   * <p>
+   * Expected Outcome: The count returns 0.0 when the deck is empty.
    * </p>
    */
   @Test
   public void testGetCountWithZeroCards() {
-    // Remove all cards from the deck
     int totalCards = GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length;
     for (int i = 0; i < totalCards; i++) {
       Card.Rank rank = deck.getCards().get(0).getRank();
       deck.remove(rank);
     }
 
-    // Now, getCount should handle division by zero gracefully
-    // According to the current implementation, it returns 0.0
     double count = deck.getCount();
     assertEquals("Count should be 0.0 when deck is empty", 0.0, count, 0.0001);
   }
@@ -440,8 +474,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#getValueCounts()} method.
    * <p>
-   * Verifies that the initial value counts are correct based on the number of
-   * decks and ranks.
+   * Scenario: Verifying that the initial value counts are correct based on the
+   * number of decks and ranks.
+   * </p>
+   * <p>
+   * Expected Outcome: Each value count matches the expected initial count.
    * </p>
    */
   @Test
@@ -450,7 +487,6 @@ public class DeckTest {
     assertNotNull("getValueCounts should not return null", valueCounts);
     assertEquals("valueCounts should have 10 elements", 10, valueCounts.length);
 
-    // Check if each value count matches the expected initial count
     for (int i = 0; i < valueCounts.length - 1; i++) {
       int expectedCount;
 
@@ -468,8 +504,10 @@ public class DeckTest {
   /**
    * Tests that the value counts update correctly after adding a card.
    * <p>
-   * Adds a card of a specific rank and verifies that the corresponding value
-   * count increases by 1.
+   * Scenario: Adding a card of a specific rank (THREE) to the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The corresponding value count increases by 1.
    * </p>
    */
   @Test
@@ -487,8 +525,10 @@ public class DeckTest {
   /**
    * Tests that the value counts update correctly after removing a card.
    * <p>
-   * Removes a card of a specific rank and verifies that the corresponding value
-   * count decreases by 1.
+   * Scenario: Removing a card of a specific rank (SEVEN) from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The corresponding value count decreases by 1.
    * </p>
    */
   @Test
@@ -507,9 +547,12 @@ public class DeckTest {
    * Tests that modifying the returned value counts array does not affect the
    * internal array.
    * <p>
-   * Ensures that {@link Deck#getValueCounts()} returns a deep copy of the
-   * internal
-   * value counts array, preventing external modifications.
+   * Scenario: Modifying the array returned by {@link Deck#getValueCounts()}
+   * should not alter the internal state of the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The internal value counts remain unchanged despite external
+   * modifications.
    * </p>
    */
   @Test
@@ -529,8 +572,11 @@ public class DeckTest {
   /**
    * Tests the {@link Deck#toString()} method.
    * <p>
-   * Verifies that the method returns the correct string representation of the
-   * deck, listing all cards separated by newlines.
+   * Scenario: Verifying that the method returns the correct string
+   * representation of the deck, listing all cards separated by newlines.
+   * </p>
+   * <p>
+   * Expected Outcome: The string representation matches the expected format.
    * </p>
    */
   @Test
@@ -552,17 +598,18 @@ public class DeckTest {
   /**
    * Tests removing all instances of a specific rank and verifies deck integrity.
    * <p>
-   * Removes all instances of a given rank and ensures the deck no longer contains
-   * that rank, and that the count reflects the removals appropriately.
+   * Scenario: Removing all instances of a given rank (e.g., ACE) from the deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The deck no longer contains that rank, and the count is
+   * updated appropriately.
    * </p>
    */
   @Test
   public void testEmptyDeck() {
-    // Remove all cards from the deck
     int totalCards = GameRules.NUMBER_OF_DECKS * 4 * Card.Rank.values().length;
 
     for (int i = 0; i < totalCards; i++) {
-      // Remove the first card repeatedly
       Card.Rank rank = deck.getCards().get(0).getRank();
       deck.remove(rank);
     }
@@ -570,8 +617,6 @@ public class DeckTest {
     assertEquals("Deck size should be 0 after removing all cards", 0, deck.getSize());
     assertEquals("Count should be 0 after removing all cards", 0.0, deck.getCount(), 0.0001);
 
-    // Attempting to remove a card from an empty deck should throw
-    // IllegalStateException
     try {
       deck.remove(Card.Rank.ACE);
       fail("Removing a card from an empty deck should throw IllegalStateException");
