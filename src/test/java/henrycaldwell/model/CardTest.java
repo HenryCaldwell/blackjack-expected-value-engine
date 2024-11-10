@@ -33,8 +33,11 @@ public class CardTest {
   /**
    * Tests the {@link Card} constructor with a valid {@link Card.Rank}.
    * <p>
-   * Ensures that a {@code Card} object is correctly instantiated with the
-   * provided rank.
+   * Scenario: Creating a {@code Card} with a valid rank {@link Card.Rank#ACE}.
+   * </p>
+   * <p>
+   * Expected Outcome: A non-null {@code Card} object is instantiated with the
+   * specified rank.
    * </p>
    */
   @Test
@@ -47,8 +50,10 @@ public class CardTest {
   /**
    * Tests the {@link Card} constructor with a {@code null} {@link Card.Rank}.
    * <p>
-   * Expects an {@link IllegalArgumentException} to be thrown when attempting to
-   * create a {@code Card} with a {@code null} rank.
+   * Scenario: Attempting to create a {@code Card} with a {@code null} rank.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -63,7 +68,11 @@ public class CardTest {
   /**
    * Tests the {@link Card#getRank()} method.
    * <p>
-   * Verifies that the correct rank is returned for a given {@code Card} instance.
+   * Scenario: Retrieving the rank of a {@code Card} instantiated with
+   * {@link Card.Rank#KING}.
+   * </p>
+   * <p>
+   * Expected Outcome: The correct rank {@link Card.Rank#KING} is returned.
    * </p>
    */
   @Test
@@ -79,7 +88,10 @@ public class CardTest {
   /**
    * Tests the {@link Card#equals(Object)} method for reflexivity.
    * <p>
-   * Ensures that a {@code Card} instance is equal to itself.
+   * Scenario: A {@code Card} instance should be equal to itself.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code true}.
    * </p>
    */
   @Test
@@ -91,8 +103,11 @@ public class CardTest {
   /**
    * Tests the {@link Card#equals(Object)} method for symmetry.
    * <p>
-   * Ensures that if one {@code Card} is equal to another, then the second is
-   * equal to the first.
+   * Scenario: Two {@code Card} instances with the same rank should be equal to
+   * each other.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code true} in both directions.
    * </p>
    */
   @Test
@@ -106,9 +121,11 @@ public class CardTest {
   /**
    * Tests the {@link Card#equals(Object)} method for transitivity.
    * <p>
-   * Ensures that if {@code card1} equals {@code card2} and {@code card2} equals
-   * {@code card3},
-   * then {@code card1} should equal {@code card3}.
+   * Scenario: If {@code card1} equals {@code card2} and {@code card2} equals
+   * {@code card3}, then {@code card1} should equal {@code card3}.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code true} for all comparisons.
    * </p>
    */
   @Test
@@ -124,8 +141,11 @@ public class CardTest {
   /**
    * Tests the {@link Card#equals(Object)} method with different ranks.
    * <p>
-   * Ensures that {@code Card} instances with different ranks are not considered
+   * Scenario: Two {@code Card} instances with different ranks should not be
    * equal.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code false}.
    * </p>
    */
   @Test
@@ -139,7 +159,10 @@ public class CardTest {
    * Tests the {@link Card#equals(Object)} method when comparing with
    * {@code null}.
    * <p>
-   * Ensures that a {@code Card} instance is not equal to {@code null}.
+   * Scenario: A {@code Card} instance should not be equal to {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code false}.
    * </p>
    */
   @Test
@@ -152,8 +175,11 @@ public class CardTest {
    * Tests the {@link Card#equals(Object)} method with an object of a different
    * type.
    * <p>
-   * Ensures that a {@code Card} instance is not considered equal to an object of
-   * a different class.
+   * Scenario: A {@code Card} instance should not be equal to an object of a
+   * different class.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code equals} returns {@code false}.
    * </p>
    */
   @Test
@@ -171,7 +197,10 @@ public class CardTest {
    * Tests the {@link Card#hashCode()} method for consistency with
    * {@link Card#equals(Object)}.
    * <p>
-   * Ensures that equal {@code Card} instances have the same hash code.
+   * Scenario: Two equal {@code Card} instances should have the same hash code.
+   * </p>
+   * <p>
+   * Expected Outcome: {@code hashCode} values are identical.
    * </p>
    */
   @Test
@@ -188,9 +217,12 @@ public class CardTest {
   /**
    * Tests the {@link Card#toString()} method.
    * <p>
-   * Verifies that the {@code toString()} method returns the correct string
-   * representation
-   * of the {@code Card} instance, typically the name of its rank.
+   * Scenario: The {@code toString()} method should return the name of the card's
+   * rank.
+   * </p>
+   * <p>
+   * Expected Outcome: The correct string representation of the card's rank is
+   * returned.
    * </p>
    */
   @Test

@@ -6,6 +6,21 @@ import org.junit.Test;
 
 /**
  * Test suite for the {@link Card.Rank} enum.
+ * <p>
+ * This class contains unit tests to verify the correctness of the
+ * {@link Card.Rank} enum methods, including parsing abbreviations and values,
+ * as well as retrieving properties like name, abbreviation, and numerical
+ * value.
+ * </p>
+ * <p>
+ * Example usage:
+ * </p>
+ * 
+ * <pre>{@code
+ * Card.Rank ace = Card.Rank.fromAbbreviation("A");
+ * String name = ace.getName(); // "Ace"
+ * int value = ace.getValue(); // 1
+ * }</pre>
  */
 public class CardRankTest {
 
@@ -15,6 +30,12 @@ public class CardRankTest {
 
   /**
    * Tests {@link Card.Rank#fromAbbreviation(String)} with valid abbreviations.
+   * <p>
+   * Scenario: Providing standard abbreviations like "A" for ACE and "2" for TWO.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct {@link Card.Rank} enum values are returned.
+   * </p>
    */
   @Test
   public void testFromAbbreviationValid() {
@@ -24,6 +45,14 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromAbbreviation(String)} is case-insensitive.
+   * <p>
+   * Scenario: Providing lowercase abbreviations like "a" for ACE and "q" for
+   * QUEEN.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct {@link Card.Rank} enum values are returned
+   * regardless of case.
+   * </p>
    */
   @Test
   public void testFromAbbreviationCaseInsensitive() {
@@ -33,8 +62,13 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromAbbreviation(String)} throws
-   * {@link IllegalArgumentException}
-   * for null input.
+   * {@link IllegalArgumentException} for null input.
+   * <p>
+   * Scenario: Providing a {@code null} abbreviation.
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testFromAbbreviationNull() {
@@ -43,8 +77,13 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromAbbreviation(String)} throws
-   * {@link IllegalArgumentException}
-   * for invalid abbreviations.
+   * {@link IllegalArgumentException} for invalid abbreviations.
+   * <p>
+   * Scenario: Providing an invalid abbreviation like "InvalidAbbr".
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testFromAbbreviationInvalid() {
@@ -53,8 +92,13 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromAbbreviation(String)} throws
-   * {@link IllegalArgumentException}
-   * for empty string input.
+   * {@link IllegalArgumentException} for empty string input.
+   * <p>
+   * Scenario: Providing an empty string as abbreviation.
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testFromAbbreviationEmptyString() {
@@ -67,6 +111,12 @@ public class CardRankTest {
 
   /**
    * Tests {@link Card.Rank#fromValue(int)} with valid values.
+   * <p>
+   * Scenario: Providing valid numerical values like 1 for ACE and 10 for TEN.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct {@link Card.Rank} enum values are returned.
+   * </p>
    */
   @Test
   public void testFromValueValid() {
@@ -76,22 +126,27 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromValue(int)} throws
-   * {@link IllegalArgumentException}
-   * for invalid values.
+   * {@link IllegalArgumentException} for invalid values.
+   * <p>
+   * Scenario: Providing an invalid numerical value like 15.
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testFromValueInvalid() {
     Card.Rank.fromValue(15);
   }
 
-  // Uncomment the following tests if you intend to include them.
-
   /**
    * Tests that {@link Card.Rank#fromValue(int)} throws
-   * {@link IllegalArgumentException}
-   * for negative values.
+   * {@link IllegalArgumentException} for negative values.
    * <p>
-   * Expected: {@link IllegalArgumentException}
+   * Scenario: Providing a negative numerical value like -1.
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -101,10 +156,12 @@ public class CardRankTest {
 
   /**
    * Tests that {@link Card.Rank#fromValue(int)} throws
-   * {@link IllegalArgumentException}
-   * for zero value.
+   * {@link IllegalArgumentException} for zero value.
    * <p>
-   * Expected: {@link IllegalArgumentException}
+   * Scenario: Providing zero as the numerical value.
+   * </p>
+   * <p>
+   * Expected Outcome: {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -118,6 +175,12 @@ public class CardRankTest {
 
   /**
    * Tests the {@link Card.Rank#getName()} method.
+   * <p>
+   * Scenario: Retrieving the name of the card ranks ACE and KING.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct names "Ace" and "King" are returned.
+   * </p>
    */
   @Test
   public void testGetName() {
@@ -127,6 +190,12 @@ public class CardRankTest {
 
   /**
    * Tests the {@link Card.Rank#getAbbreviation()} method.
+   * <p>
+   * Scenario: Retrieving the abbreviation of the card ranks ACE and QUEEN.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct abbreviations "A" and "Q" are returned.
+   * </p>
    */
   @Test
   public void testGetAbbreviation() {
@@ -136,6 +205,12 @@ public class CardRankTest {
 
   /**
    * Tests the {@link Card.Rank#getValue()} method.
+   * <p>
+   * Scenario: Retrieving the numerical value of the card ranks ACE and KING.
+   * </p>
+   * <p>
+   * Expected Outcome: Correct values 1 and 10 are returned.
+   * </p>
    */
   @Test
   public void testGetValue() {
