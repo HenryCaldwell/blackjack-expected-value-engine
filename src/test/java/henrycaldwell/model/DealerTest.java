@@ -14,10 +14,8 @@ import org.junit.Test;
  * Test suite for the {@link Dealer} class.
  * <p>
  * This class contains unit tests to verify the correctness of the
- * {@link Dealer}
- * class,
- * including its constructors, {@code addHand}, {@code getHand}, {@code clone},
- * and {@code toString} methods.
+ * {@link Dealer} class, including its constructors, {@code addHand},
+ * {@code getHand}, {@code clone}, and {@code toString} methods.
  * </p>
  * <p>
  * Example usage:
@@ -340,8 +338,7 @@ public class DealerTest {
    * </p>
    * <p>
    * Expected Outcome: The cloned dealer's hand remains unchanged despite
-   * modifications
-   * to the original dealer's hand.
+   * modifications to the original dealer's hand.
    * </p>
    */
   @Test
@@ -366,8 +363,7 @@ public class DealerTest {
    * </p>
    * <p>
    * Expected Outcome: The cloned dealer is a different instance with a deep copy
-   * of the
-   * hand, maintaining the same card ranks.
+   * of the hand, maintaining the same card ranks.
    * </p>
    */
   @Test
@@ -401,8 +397,7 @@ public class DealerTest {
    * representation when a hand is present.
    * <p>
    * Scenario: The dealer has an existing hand (hand1). The {@code toString()}
-   * method
-   * should return the hand's string representation.
+   * method should return the hand's string representation.
    * </p>
    * <p>
    * Expected Outcome: The string representation matches the hand's string.
@@ -420,8 +415,7 @@ public class DealerTest {
    * representation after hand modifications.
    * <p>
    * Scenario: After adding a new card to the dealer's hand, the
-   * {@code toString()}
-   * method should reflect the updated hand.
+   * {@code toString()} method should reflect the updated hand.
    * </p>
    * <p>
    * Expected Outcome: The initial {@code toString()} remains unchanged, and the
@@ -475,8 +469,7 @@ public class DealerTest {
    * before assigning.
    * <p>
    * Scenario: Adding a hand to the dealer and verifying that the dealer's
-   * internal
-   * hand is a clone of the original hand.
+   * internal hand is a clone of the original hand.
    * </p>
    * <p>
    * Expected Outcome: The internal hand is a different instance but contains the

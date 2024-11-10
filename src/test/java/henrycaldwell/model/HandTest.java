@@ -16,10 +16,10 @@ import org.junit.Test;
  * Test suite for the {@link Hand} class.
  * <p>
  * This class contains unit tests to verify the correctness of the {@link Hand}
- * class,
- * including its constructor, {@code add}, {@code remove}, {@code contains},
- * {@code evaluateHand}, {@code isSoftHand}, {@code getCards}, {@code setCards},
- * {@code getSize}, {@code clone}, and {@code toString} methods.
+ * class, including its constructor, {@code add}, {@code remove},
+ * {@code contains}, {@code evaluateHand}, {@code isSoftHand}, {@code getCards},
+ * {@code setCards}, {@code getSize}, {@code clone}, and {@code toString}
+ * methods.
  * </p>
  * <p>
  * Example usage:
@@ -228,7 +228,7 @@ public class HandTest {
   public void testRemoveNonExistingRank() {
     hand.add(Card.Rank.ACE);
     hand.add(Card.Rank.FIVE);
-    hand.remove(Card.Rank.KING); // KING is not in hand, should throw exception
+    hand.remove(Card.Rank.KING);
   }
 
   /**
@@ -474,8 +474,7 @@ public class HandTest {
    * </p>
    * <p>
    * Expected Outcome: The hand is considered hard since the ace must be counted
-   * as
-   * 1 to prevent busting.
+   * as 1 to prevent busting.
    * </p>
    */
   @Test
@@ -514,8 +513,7 @@ public class HandTest {
    * </p>
    * <p>
    * Expected Outcome: Modifications to the retrieved list do not affect the
-   * original
-   * hand.
+   * original hand.
    * </p>
    */
   @SuppressWarnings("unlikely-arg-type")

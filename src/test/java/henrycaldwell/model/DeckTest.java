@@ -232,8 +232,7 @@ public class DeckTest {
    * exist in the deck.
    * <p>
    * Scenario: Attempting to remove a rank (ACE) that has no remaining instances
-   * in
-   * the deck.
+   * in the deck.
    * </p>
    * <p>
    * Expected Outcome: An {@link IllegalStateException} is thrown.

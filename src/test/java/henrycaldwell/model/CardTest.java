@@ -11,8 +11,7 @@ import org.junit.Test;
  * Test suite for the {@link Card} class.
  * <p>
  * This class contains unit tests to verify the correctness of the {@link Card}
- * class,
- * including its constructor, {@code equals}, {@code hashCode}, and
+ * class, including its constructor, {@code equals}, {@code hashCode}, and
  * {@code toString} methods.
  * </p>
  * <p>
@@ -182,6 +181,7 @@ public class CardTest {
    * Expected Outcome: {@code equals} returns {@code false}.
    * </p>
    */
+  @SuppressWarnings("unlikely-arg-type")
   @Test
   public void testEqualsDifferentObjectType() {
     Card card = new Card(Card.Rank.FIVE);
