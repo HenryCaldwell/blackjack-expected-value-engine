@@ -15,9 +15,9 @@ import henrycaldwell.model.Hand;
  * Test suite for the {@link PredictionModel} class.
  * <p>
  * This class contains unit tests to verify the correctness of the
- * {@link PredictionModel} class, including its methods for calculating
- * expected values (EV) for various player actions such as standing,
- * hitting, doubling, splitting, and surrendering.
+ * {@link PredictionModel} class, including its methods for
+ * calculating expected values (EV) for various player actions such
+ * as standing, hitting, doubling, splitting, and surrendering.
  * </p>
  * <p>
  * Example usage:
@@ -44,6 +44,10 @@ public class PredictionModelTest {
   /**
    * Setup method to initialize {@link PredictionModel}, {@link GameRules}, and
    * common {@link Hand}s before each test.
+   * <p>
+   * Ensures that the prediction model and hands are initialized correctly before
+   * each test case.
+   * </p>
    */
   @Before
   public void setUp() {
@@ -79,6 +83,13 @@ public class PredictionModelTest {
 
   /**
    * Tests that {@link PredictionModel} initializes correctly.
+   * <p>
+   * Scenario: Instantiating a {@code PredictionModel} using the default
+   * constructor.
+   * </p>
+   * <p>
+   * Expected Outcome: The prediction model instance is not null.
+   * </p>
    */
   @Test
   public void testDefaultConstructor() {
@@ -95,6 +106,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: All arguments are {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateStandEV_NullArguments() {
@@ -106,6 +120,9 @@ public class PredictionModelTest {
    * counts is {@code null}.
    * <p>
    * Scenario: Value counts is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -119,6 +136,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateStandEV_NullPlayerHand() {
@@ -131,6 +151,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Dealer hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateStandEV_NullDealerHand() {
@@ -142,6 +165,10 @@ public class PredictionModelTest {
    * player hand of 20 vs. dealer showing 9.
    * <p>
    * Scenario: Player stands on 20 vs. Dealer showing 9.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
    * </p>
    */
   @Test
@@ -165,6 +192,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has 22 and stands vs. Dealer showing 5.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -1.0, indicating a bust.
+   * </p>
    */
   @Test
   public void testCalculateStandEV_PlayerBusts() {
@@ -185,6 +215,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has Blackjack vs. Dealer showing 5.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the Blackjack odds.
+   * </p>
    */
   @Test
   public void testCalculateStandEV_PlayerBlackjack() {
@@ -203,6 +236,10 @@ public class PredictionModelTest {
    * has a natural blackjack.
    * <p>
    * Scenario: Player has 20 vs. Dealer has Blackjack.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -1.0, indicating the dealer's
+   * Blackjack.
    * </p>
    */
   @Test
@@ -224,6 +261,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Both Player and Dealer have Blackjack.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 0.0, indicating a push.
+   * </p>
    */
   @Test
   public void testCalculateStandEV_PlayerAndDealerBlackjack() {
@@ -243,6 +283,9 @@ public class PredictionModelTest {
    * busts.
    * <p>
    * Scenario: Player has 18 vs. Dealer busts.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 1.00, indicating a win.
    * </p>
    */
   @Test
@@ -265,6 +308,10 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player stands with 18 vs. Dealer showing 7 with an empty deck.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 0.0, as no further actions can be
+   * taken.
+   * </p>
    */
   @Test
   public void testCalculateStandEV_EmptyDeck() {
@@ -285,6 +332,9 @@ public class PredictionModelTest {
    * hands.
    * <p>
    * Scenario: Player has Ace and 6 (soft 17) vs. Dealer showing 2.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately -0.13.
    * </p>
    */
   @Test
@@ -309,6 +359,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: All arguments are {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateHitEV_NullArguments() {
@@ -320,6 +373,9 @@ public class PredictionModelTest {
    * counts is {@code null}.
    * <p>
    * Scenario: Value counts is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -333,6 +389,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateHitEV_NullPlayerHand() {
@@ -345,6 +404,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Dealer hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateHitEV_NullDealerHand() {
@@ -356,6 +418,10 @@ public class PredictionModelTest {
    * hand of 20 vs. dealer showing 9.
    * <p>
    * Scenario: Player hits on 20 vs. Dealer showing 9.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
    * </p>
    */
   @Test
@@ -379,6 +445,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player hits and busts with 22.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -1.0, indicating a bust.
+   * </p>
    */
   @Test
   public void testCalculateHitEV_PlayerBusts() {
@@ -400,6 +469,10 @@ public class PredictionModelTest {
    * Scenario: Player has Blackjack and chooses to hit (though typically not
    * allowed).
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
+   * </p>
    */
   @Test
   public void testCalculateHitEV_PlayerBlackjack() {
@@ -418,6 +491,10 @@ public class PredictionModelTest {
    * has a natural blackjack.
    * <p>
    * Scenario: Player has 20 vs. Dealer has Blackjack.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -1.0, indicating the dealer's
+   * Blackjack.
    * </p>
    */
   @Test
@@ -439,6 +516,10 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Both Player and Dealer have Blackjack.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -1.0, indicating the player loses or
+   * push depending on rules.
+   * </p>
    */
   @Test
   public void testCalculateHitEV_PlayerAndDealerBlackjack() {
@@ -459,6 +540,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has 17 vs. Dealer busts.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately -0.39.
+   * </p>
    */
   @Test
   public void testCalculateHitEV_DealerBusts() {
@@ -475,10 +559,14 @@ public class PredictionModelTest {
   }
 
   /**
-   * Tests {@link PredictionModel#calculateHitEV(int[], Hand, Hand)} with an
-   * empty deck.
+   * Tests {@link PredictionModel#calculateHitEV(int[], Hand, Hand)} with an empty
+   * deck.
    * <p>
    * Scenario: Player hits with 5 vs. Dealer showing 7 with an empty deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 0.0, as no further actions can be
+   * taken.
    * </p>
    */
   @Test
@@ -500,6 +588,9 @@ public class PredictionModelTest {
    * hands.
    * <p>
    * Scenario: Player has Ace and 6 (soft 17) vs. Dealer showing 2.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately 0.01.
    * </p>
    */
   @Test
@@ -524,6 +615,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: All arguments are {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateDoubleEV_NullArguments() {
@@ -535,6 +629,9 @@ public class PredictionModelTest {
    * counts is {@code null}.
    * <p>
    * Scenario: Value counts is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -548,6 +645,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateDoubleEV_NullPlayerHand() {
@@ -560,6 +660,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Dealer hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateDoubleEV_NullDealerHand() {
@@ -571,6 +674,10 @@ public class PredictionModelTest {
    * player hand of 11 vs. dealer showing 6.
    * <p>
    * Scenario: Player doubles on 11 vs. Dealer showing 6.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
    * </p>
    */
   @Test
@@ -594,6 +701,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player doubles and busts with 22.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -2.0, indicating a bust.
+   * </p>
    */
   @Test
   public void testCalculateDoubleEV_PlayerBusts() {
@@ -615,6 +725,10 @@ public class PredictionModelTest {
    * Scenario: Player has Blackjack and chooses to double (though typically not
    * allowed).
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
+   * </p>
    */
   @Test
   public void testCalculateDoubleEV_PlayerBlackjack() {
@@ -633,6 +747,10 @@ public class PredictionModelTest {
    * dealer has a natural blackjack.
    * <p>
    * Scenario: Player has 12 vs. Dealer has Blackjack.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -2.0, indicating the dealer's
+   * Blackjack.
    * </p>
    */
   @Test
@@ -654,6 +772,10 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Both Player and Dealer have Blackjack.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -2.0, indicating the player loses or
+   * push depending on rules.
+   * </p>
    */
   @Test
   public void testCalculateDoubleEV_PlayerAndDealerBlackjack() {
@@ -674,6 +796,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has 13 vs. Dealer busts.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately 0.45.
+   * </p>
    */
   @Test
   public void testCalculateDoubleEV_DealerBusts() {
@@ -693,7 +818,12 @@ public class PredictionModelTest {
    * Tests {@link PredictionModel#calculateDoubleEV(int[], Hand, Hand)} with an
    * empty deck.
    * <p>
-   * Scenario: Player doubles with 18 vs. Dealer showing 7 with an empty deck.
+   * Scenario: Player doubles with Ace and Three vs. Dealer showing Three with an
+   * empty deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 0.0, as no further actions can be
+   * taken.
    * </p>
    */
   @Test
@@ -715,6 +845,9 @@ public class PredictionModelTest {
    * hands.
    * <p>
    * Scenario: Player has Ace and 7 (soft 18) vs. Dealer showing 3.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately -0.55.
    * </p>
    */
   @Test
@@ -739,6 +872,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: All arguments are {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateSplitEV_NullArguments() {
@@ -750,6 +886,9 @@ public class PredictionModelTest {
    * counts is {@code null}.
    * <p>
    * Scenario: Value counts is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -763,6 +902,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateSplitEV_NullPlayerHand() {
@@ -775,6 +917,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Dealer hand is {@code null}.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateSplitEV_NullDealerHand() {
@@ -786,6 +931,10 @@ public class PredictionModelTest {
    * valid split scenario.
    * <p>
    * Scenario: Player has a pair of 8s vs. Dealer showing 9.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV matches the expected value within a
+   * margin.
    * </p>
    */
   @Test
@@ -806,6 +955,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has a pair of Aces vs. Dealer showing 8.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is approximately 0.39.
+   * </p>
    */
   @Test
   public void testCalculateSplitEV_PairOfAces_Dealer8() {
@@ -825,6 +977,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has non-pair cards vs. Dealer showing 5.
    * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
+   * </p>
    */
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateSplitEV_CannotSplit() {
@@ -841,7 +996,11 @@ public class PredictionModelTest {
    * Tests {@link PredictionModel#calculateSplitEV(int[], Hand, Hand)} with an
    * empty deck.
    * <p>
-   * Scenario: Player splits with 6 vs. Dealer showing 2 with an empty deck.
+   * Scenario: Player splits with 3s vs. Dealer showing 2 with an empty deck.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is 0.0, as no further actions can be
+   * taken.
    * </p>
    */
   @Test
@@ -863,10 +1022,13 @@ public class PredictionModelTest {
   // ================================
 
   /**
-   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} with
-   * null arguments.
+   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} with null
+   * arguments.
    * <p>
    * Scenario: All arguments are {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -875,10 +1037,13 @@ public class PredictionModelTest {
   }
 
   /**
-   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} when
-   * player hand is {@code null}.
+   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} when player
+   * hand is {@code null}.
    * <p>
    * Scenario: Player hand is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -887,10 +1052,13 @@ public class PredictionModelTest {
   }
 
   /**
-   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} when
-   * dealer hand is {@code null}.
+   * Tests {@link PredictionModel#calculateSurrenderEV(Hand, Hand)} when dealer
+   * hand is {@code null}.
    * <p>
    * Scenario: Dealer hand is {@code null}.
+   * </p>
+   * <p>
+   * Expected Outcome: An {@link IllegalArgumentException} is thrown.
    * </p>
    */
   @Test(expected = IllegalArgumentException.class)
@@ -903,6 +1071,10 @@ public class PredictionModelTest {
    * where surrender is beneficial.
    * <p>
    * Scenario: Player has 16 vs. Dealer showing 10.
+   * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -0.5, indicating a loss of half the
+   * bet.
    * </p>
    */
   @Test
@@ -923,6 +1095,9 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Empty player hand vs. Empty dealer hand.
    * </p>
+   * <p>
+   * Expected Outcome: The calculated EV is -0.5, representing a surrender.
+   * </p>
    */
   @Test
   public void testCalculateSurrenderEV_EmptyHands() {
@@ -941,8 +1116,12 @@ public class PredictionModelTest {
    * <p>
    * Scenario: Player has two 6s vs. Dealer showing 2. The test measures the time
    * taken for the first and second calls to
-   * {@link PredictionModel#calculateHitEV(int[], Hand, Hand)}
-   * to ensure that the second call is faster due to memoization.
+   * {@link PredictionModel#calculateHitEV(int[], Hand, Hand)} to ensure that the
+   * second call is faster due to memoization.
+   * </p>
+   * <p>
+   * Expected Outcome: The second call is faster or equal in time compared to the
+   * first call, and the EV values from both calls are identical.
    * </p>
    */
   @Test
