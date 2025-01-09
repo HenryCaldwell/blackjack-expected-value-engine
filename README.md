@@ -1,6 +1,6 @@
 # Blackjack Prediction Model
 
-This repository contains a Java implementation of a simplified Blackjack game, featuring multiple classes that work together to simulate the gameplay, including card handling, and player interactions, as well as a model that is able to correctly determine the best course of play based on the remaining composition of the deck.
+This Java program calculates the expected value of any Blackjack hand by simulating every possible outcome against the dealer. It evaluates all potential decisions (hit, stand, double, split, surrender) and computes the player's expected return based on probabilities and outcomes for each possible option. The model uses top-down programming for efficient calculation and is ideal for analyzing optimal strategies or fine-tuning Blackjack play. It provides a clear understanding of long-term profitability for each possible decision in any given hand scenario.
 
 ---
 
@@ -518,4 +518,5 @@ HIT_SPLIT_ACES = false
 #
 
 DOUBLE_SPLIT_ACES = false
+
 ```
