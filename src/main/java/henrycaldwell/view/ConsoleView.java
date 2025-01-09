@@ -163,7 +163,6 @@ public class ConsoleView {
    */
   public void displayDealerHand(Dealer dealer) {
     System.out.println("Dealer:\nHand: " + dealer.getHand());
-    System.out.println(); // Empty line separator
   }
 
   /**
